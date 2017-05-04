@@ -22,12 +22,12 @@
             <S3jpe type="matrix">{ 0, 0,      0,     0, -PI / 2, 0 }</S3jpe>
             <Sfipe type="matrix">{ 0.06703, 0.02076, 0, 0, 0, 0 }</Sfipe>
             <Sfjpe type="matrix">{ 0,   0, 0, 0, 0, 0 }</Sfjpe>
-            <LFpe type="matrix">{-0.08368 , 0 ,  0.38988,   PI/2,  PI* 5/6,   -PI/2-PI*70/180}</LFpe>
+            <LFpe type="matrix">{-0.08368 , 0 , -0.38988,   PI/2,  PI* 5/6,   -PI/2-PI*70/180}</LFpe>
             <LMpe type="matrix">{-0.36677 , 0 ,  0,         PI/2,  PI* 6/6,   -PI/2-PI*70/180}</LMpe>
-            <LRpe type="matrix">{-0.33437 , 0 , -0.34288,   PI/2,  PI* 7/6,   -PI/2-PI*70/180}</LRpe>
-            <RFpe type="matrix">{ 0.08368 , 0 ,  0.38988,   PI/2,  PI* 1/6,   -PI/2-PI*70/180}</RFpe>
+            <LRpe type="matrix">{-0.33437 , 0 ,  0.34288,   PI/2,  PI* 7/6,   -PI/2-PI*70/180}</LRpe>
+            <RFpe type="matrix">{ 0.08368 , 0 , -0.38988,   PI/2,  PI* 1/6,   -PI/2-PI*70/180}</RFpe>
             <RMpe type="matrix">{ 0.36677 , 0 ,  0,         PI/2,  PI* 0/6,   -PI/2-PI*70/180}</RMpe>
-            <RRpe type="matrix">{ 0.33437 , 0 , -0.34288,   PI/2,  PI* 11/6,   -PI/2-PI*70/180}</RRpe>
+            <RRpe type="matrix">{ 0.33437 , 0 ,  0.34288,   PI/2,  PI* 11/6,   -PI/2-PI*70/180}</RRpe>
             <ForceSensorMakPe type="matrix">{ 0,0,0,0,0,0 }</ForceSensorMakPe>
             <BodyGamma type="matrix">{140,0,0,0,0,0,0,0,0,0}</BodyGamma>
             <P1aGamma type="matrix">{0,0,0,0,0,0,0,0,0,0}</P1aGamma>
@@ -625,8 +625,8 @@
                     <SDO>
                         <homeMode index="0x6098" subindex="0" type="int8" config="-1"/>
                         <homeAcc index="0x609A" subindex="0" type="uint32" config="200000"/>
-                        <homeHighSpeed index="0x6099" subindex="1" type="uint32" config="200000"/>
-                        <homeLowSpeed index="0x6099" subindex="2" type="uint32" config="100000"/>
+                        <homeHighSpeed index="0x6099" subindex="1" type="uint32" config="50000"/>
+                        <homeLowSpeed index="0x6099" subindex="2" type="uint32" config="25000"/>
                         <RatioOfPosDivVel_Numerator index="0x6096" subindex="1" type="uint32" config="1"/>
                         <RatioOfPosDivVel_Divisor index="0x6096" subindex="2" type="uint32" config="1"/>
                         <homeTorqueLimit index="0x2020" subindex="1" type="int32" config="950"/>
@@ -657,13 +657,13 @@
                         </index_1a01>
                     </PDO>
                     <SDO>
-                        <homeMode index="0x6098" subindex="0" type="int8" config="2"/>
-                        <homeAcc index="0x609A" subindex="0" type="uint32" config="50"/>
+                        <homeMode index="0x6098" subindex="0" type="int8" config="1"/>
+                        <homeAcc index="0x609A" subindex="0" type="uint32" config="100"/>
                         <homeHighSpeed index="0x6099" subindex="1" type="uint32" config="400"/>
                         <homeLowSpeed index="0x6099" subindex="2" type="uint32" config="40"/>
                         <RatioOfPosDivVel_Numerator index="0x6096" subindex="1" type="uint32" config="1"/>
                         <RatioOfPosDivVel_Divisor index="0x6096" subindex="2" type="uint32" config="4096"/>
-                        <p2pSpeed index="0x6081" subindex="0" type="uint32" config="400"/>
+                        <p2pSpeed index="0x6081" subindex="0" type="uint32" config="800"/>
                         <homeOffset index="0x607C" subindex="0" type="int32" config="0"/>
                     </SDO>
                 </Faulhaber>
@@ -691,24 +691,24 @@
                 </AtiForceSensor>
             </SlaveType>
             <Slave>
-                <Motion1  type="Faulhaber"  min_pos="0.00" max_pos="20.0" max_vel="2.0" home_pos="1.451" input2count="1024000" abs_id="0"/>
-                <Motion2  type="Faulhaber"  min_pos="0.00" max_pos="20.0" max_vel="2.0" home_pos="1.300" input2count="1024000" abs_id="1"/>
-                <Motion3  type="Faulhaber"  min_pos="0.00" max_pos="20.0" max_vel="2.0" home_pos="1.460" input2count="1024000" abs_id="2"/>
-                <Motion4  type="Faulhaber"  min_pos="0.00" max_pos="20.0" max_vel="2.0" home_pos="0.814" input2count="1024000" abs_id="3"/>
-                <Motion5  type="Faulhaber"  min_pos="0.00" max_pos="20.0" max_vel="2.0" home_pos="0.862" input2count="1024000" abs_id="4"/>
-                <Motion6  type="Faulhaber"  min_pos="0.00" max_pos="20.0" max_vel="2.0" home_pos="0.862" input2count="1024000" abs_id="5"/>
-                <Motion7  type="Faulhaber"  min_pos="0.00" max_pos="20.0" max_vel="2.0" home_pos="1.376" input2count="1024000" abs_id="6"/>
-                <Motion8  type="Faulhaber"  min_pos="0.00" max_pos="20.0" max_vel="2.0" home_pos="1.429" input2count="1024000" abs_id="7"/>
-                <Motion9  type="Faulhaber"  min_pos="0.00" max_pos="20.0" max_vel="2.0" home_pos="1.247" input2count="1024000" abs_id="8"/>
-                <Motion10 type="Faulhaber"  min_pos="0.00" max_pos="20.0" max_vel="2.0" home_pos="1.451" input2count="1024000" abs_id="9"/>
-                <Motion11 type="Faulhaber"  min_pos="0.00" max_pos="20.0" max_vel="2.0" home_pos="1.460" input2count="1024000" abs_id="10"/>
-                <Motion12 type="Faulhaber"  min_pos="0.00" max_pos="20.0" max_vel="2.0" home_pos="1.300" input2count="1024000" abs_id="11"/>
-                <Motion13 type="Faulhaber"  min_pos="0.00" max_pos="20.0" max_vel="2.0" home_pos="0.814" input2count="1024000" abs_id="12"/>
-                <Motion14 type="Faulhaber"  min_pos="0.00" max_pos="20.0" max_vel="2.0" home_pos="0.862" input2count="1024000" abs_id="13"/>
-                <Motion15 type="Faulhaber"  min_pos="0.00" max_pos="20.0" max_vel="2.0" home_pos="0.862" input2count="1024000" abs_id="14"/>
-                <Motion16 type="Faulhaber"  min_pos="0.00" max_pos="20.0" max_vel="2.0" home_pos="1.376" input2count="1024000" abs_id="15"/>
-                <Motion17 type="Faulhaber"  min_pos="0.00" max_pos="20.0" max_vel="2.0" home_pos="1.247" input2count="1024000" abs_id="16"/>
-                <Motion18 type="Faulhaber"  min_pos="0.00" max_pos="20.0" max_vel="2.0" home_pos="1.429" input2count="1024000" abs_id="17"/>
+                <Motion1 type="ElmoSoloWhistle"  min_pos="0.770" max_pos="1.200" max_vel="0.9481" home_pos="0.770" input2count="2184533" abs_id="16"/>
+                <Motion2 type="ElmoSoloWhistle"  min_pos="0.750" max_pos="1.180" max_vel="0.9481" home_pos="0.750" input2count="2184533" abs_id="15"/>
+                <Motion3 type="ElmoSoloWhistle"  min_pos="0.770" max_pos="1.200" max_vel="0.9481" home_pos="0.770" input2count="2184533" abs_id="17"/>
+                <Motion4 type="ElmoSoloWhistle"  min_pos="0.770" max_pos="1.200" max_vel="0.9481" home_pos="0.770" input2count="2184533" abs_id="13"/>
+                <Motion5 type="ElmoSoloWhistle"  min_pos="0.750" max_pos="1.180" max_vel="0.9481" home_pos="0.750" input2count="2184533" abs_id="12"/>
+                <Motion6 type="ElmoSoloWhistle"  min_pos="0.770" max_pos="1.200" max_vel="0.9481" home_pos="0.770" input2count="2184533" abs_id="14"/>
+                <Motion7 type="ElmoSoloWhistle"  min_pos="0.770" max_pos="1.200" max_vel="0.9481" home_pos="0.770" input2count="2184533" abs_id="10"/>
+                <Motion8 type="ElmoSoloWhistle"  min_pos="0.750" max_pos="1.180" max_vel="0.9481" home_pos="0.750" input2count="2184533" abs_id="9"/>
+                <Motion9 type="ElmoSoloWhistle"  min_pos="0.770" max_pos="1.200" max_vel="0.9481" home_pos="0.770" input2count="2184533" abs_id="11"/>
+                <Motion10 type="ElmoSoloWhistle" min_pos="0.770" max_pos="1.200" max_vel="0.9481" home_pos="0.770" input2count="2184533" abs_id="1"/>
+                <Motion11 type="ElmoSoloWhistle" min_pos="0.750" max_pos="1.180" max_vel="0.9481" home_pos="0.750" input2count="2184533" abs_id="0"/>
+                <Motion12 type="ElmoSoloWhistle" min_pos="0.770" max_pos="1.200" max_vel="0.9481" home_pos="0.770" input2count="2184533" abs_id="2"/>
+                <Motion13 type="ElmoSoloWhistle" min_pos="0.770" max_pos="1.200" max_vel="0.9481" home_pos="0.770" input2count="2184533" abs_id="4"/>
+                <Motion14 type="ElmoSoloWhistle" min_pos="0.750" max_pos="1.180" max_vel="0.9481" home_pos="0.750" input2count="2184533" abs_id="3"/>
+                <Motion15 type="ElmoSoloWhistle" min_pos="0.770" max_pos="1.200" max_vel="0.9481" home_pos="0.770" input2count="2184533" abs_id="5"/>
+                <Motion16 type="ElmoSoloWhistle" min_pos="0.770" max_pos="1.200" max_vel="0.9481" home_pos="0.770" input2count="2184533" abs_id="7"/>
+                <Motion17 type="ElmoSoloWhistle" min_pos="0.750" max_pos="1.180" max_vel="0.9481" home_pos="0.750" input2count="2184533" abs_id="6"/>
+                <Motion18 type="ElmoSoloWhistle" min_pos="0.770" max_pos="1.200" max_vel="0.9481" home_pos="0.770" input2count="2184533" abs_id="8"/>
             </Slave>
         </EtherCat>
     </Controller>

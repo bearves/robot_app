@@ -38,6 +38,14 @@ int main(int argc, char *argv[])
 	{
 		xml_address = "../../Server/Robot_Faulhaber.xml";
 	}
+	else if (std::string(argv[1]) == "EL")
+	{
+		xml_address = "../../Server/Robot_Elmo.xml";
+	}
+	else if (std::string(argv[1]) == "EDU")
+	{
+		xml_address = "../../Server/RobotEdu.xml";
+	}
 	else
 	{
 		throw std::runtime_error("invalid robot name, please type in XII");
