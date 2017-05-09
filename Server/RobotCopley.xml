@@ -576,36 +576,60 @@
                         <homeOffset index="0x607C" subindex="0" type="int32" config="0"/>
                     </SDO>
                 </ElmoSoloWhistle>
-                <Faulhaber product_code="0x00001050" vender_id="0x000000ab" alias="0" distributed_clock="0x0300">
+                <CopleyAE2 product_code="0x00001050" vender_id="0x000000ab" alias="0" distributed_clock="0x0300">
                      <PDO>
                         <index_1600 index="0x1600" is_tx="false">
-                            <TargetPosition index="0x607A" subindex="0x00" type="int32"/>
-                            <TargetVelocity index="0x60FF" subindex="0x00" type="int32"/>
-                            <TargetTorque index="0x6071" subindex="0x00" type="int16"/>
-                            <ControlWord index="0x6040" subindex="0x00" type="uint16"/>
+                            <A_TargetPosition index="0x607A" subindex="0x00" type="int32"/>
+                            <A_TargetVelocity index="0x60FF" subindex="0x00" type="int32"/>
+                            <A_TargetTorque index="0x6071" subindex="0x00" type="int16"/>
+                            <A_ControlWord index="0x6040" subindex="0x00" type="uint16"/>
                         </index_1600>
                         <index_1601 index="0x1601" is_tx="false">
-                            <ModeOfOperation index="0x6060" subindex="0x00" type="uint8"/>
+                            <A_ModeOfOperation index="0x6060" subindex="0x00" type="uint8"/>
                         </index_1601>
                         <index_1a00 index="0x1A00" is_tx="true">
-                            <PositionActualValue index="0x6064" subindex="0x00" type="int32"/>
-                            <TorqueActualValue index="0x6077" subindex="0x00" type="int16"/>
-                            <StatusWord index="0x6041" subindex="0x00" type="uint16"/>
-                            <ModeOfOperationDisplay index="0x6061" subindex="0x00" type="uint8"/>
+                            <A_PositionActualValue index="0x6064" subindex="0x00" type="int32"/>
+                            <A_TorqueActualValue index="0x6077" subindex="0x00" type="int16"/>
+                            <A_StatusWord index="0x6041" subindex="0x00" type="uint16"/>
+                            <A_ModeOfOperationDisplay index="0x6061" subindex="0x00" type="uint8"/>
                         </index_1a00>
                         <index_1a01 index="0x1A01" is_tx="true">
-                            <VelocityActualValue index="0x606c" subindex="0x00" type="int32"/>
+                            <A_VelocityActualValue index="0x606c" subindex="0x00" type="int32"/>
                         </index_1a01>
+                        <index_1602 index="0x1602" is_tx="false">
+                            <B_TargetPosition index="0x687A" subindex="0x00" type="int32"/>
+                            <B_TargetVelocity index="0x68FF" subindex="0x00" type="int32"/>
+                            <B_TargetTorque index="0x6871" subindex="0x00" type="int16"/>
+                            <B_ControlWord index="0x6840" subindex="0x00" type="uint16"/>
+                        </index_1602>
+                        <index_1603 index="0x1603" is_tx="false">
+                            <B_ModeOfOperation index="0x6860" subindex="0x00" type="uint8"/>
+                        </index_1603>
+                        <index_1a02 index="0x1A02" is_tx="true">
+                            <B_PositionActualValue index="0x6864" subindex="0x00" type="int32"/>
+                            <B_TorqueActualValue index="0x6877" subindex="0x00" type="int16"/>
+                            <B_StatusWord index="0x6841" subindex="0x00" type="uint16"/>
+                            <B_ModeOfOperationDisplay index="0x6861" subindex="0x00" type="uint8"/>
+                        </index_1a02>
+                        <index_1a03 index="0x1A03" is_tx="true">
+                            <B_VelocityActualValue index="0x686C" subindex="0x00" type="int32"/>
+                        </index_1a03>
                     </PDO>
                     <SDO>
-                        <homeMode index="0x6098" subindex="0" type="int8" config="1"/>
-                        <homeAcc index="0x609A" subindex="0" type="uint32" config="50000"/>
-                        <homeHighSpeed index="0x6099" subindex="1" type="uint32" config="256000"/>
-                        <homeLowSpeed index="0x6099" subindex="2" type="uint32" config="25600"/>
-                        <p2pSpeed index="0x6081" subindex="0" type="uint32" config="256000"/>
-                        <homeOffset index="0x607C" subindex="0" type="int32" config="0"/>
+                        <A_homeMode index="0x6098" subindex="0" type="int8" config="1"/>
+                        <A_homeAcc index="0x609A" subindex="0" type="uint32" config="50000"/>
+                        <A_homeHighSpeed index="0x6099" subindex="1" type="uint32" config="256000"/>
+                        <A_homeLowSpeed index="0x6099" subindex="2" type="uint32" config="25600"/>
+                        <A_p2pSpeed index="0x6081" subindex="0" type="uint32" config="256000"/>
+                        <A_homeOffset index="0x607C" subindex="0" type="int32" config="0"/>
+                        <B_homeMode index="0x6898" subindex="0" type="int8" config="1"/>
+                        <B_homeAcc index="0x689A" subindex="0" type="uint32" config="50000"/>
+                        <B_homeHighSpeed index="0x6899" subindex="1" type="uint32" config="256000"/>
+                        <B_homeLowSpeed index="0x6899" subindex="2" type="uint32" config="25600"/>
+                        <B_p2pSpeed index="0x6881" subindex="0" type="uint32" config="256000"/>
+                        <B_homeOffset index="0x687C" subindex="0" type="int32" config="0"/>
                     </SDO>
-                </Faulhaber>
+                </CopleyAE2>
                 <AtiForceSensor product_code="0x26483052" vender_id="0x00000732" alias="0">
                     <PDO>
                         <index_1a00 index="0x1a00" is_tx="true">
@@ -630,25 +654,36 @@
                 </AtiForceSensor>
             </SlaveType>
             <Slave>
-                <Motion1  type="Faulhaber"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="1024000" abs_id="1"/>
-                <Motion2  type="Faulhaber"  min_pos="0.504" max_pos="0.708" max_vel="0.9481" home_pos="-0.504" input2count="1024000" abs_id="0"/>
-                <Motion3  type="Faulhaber"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="1024000" abs_id="2"/>
-                <Motion4  type="Faulhaber"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="1024000" abs_id="5"/>
-                <Motion5  type="Faulhaber"  min_pos="0.504" max_pos="0.708" max_vel="0.9481" home_pos="-0.504" input2count="1024000" abs_id="3"/>
-                <Motion6  type="Faulhaber"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="1024000" abs_id="4"/>
-                <Motion7  type="Faulhaber"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="1024000" abs_id="7"/>
-                <Motion8  type="Faulhaber"  min_pos="0.504" max_pos="0.708" max_vel="0.9481" home_pos="-0.504" input2count="1024000" abs_id="6"/>
-                <Motion9  type="Faulhaber"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="1024000" abs_id="8"/>
-                <Motion10 type="Faulhaber"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="1024000" abs_id="16"/>
-                <Motion11 type="Faulhaber"  min_pos="0.504" max_pos="0.708" max_vel="0.9481" home_pos="-0.504" input2count="1024000" abs_id="15"/>
-                <Motion12 type="Faulhaber"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="1024000" abs_id="17"/>
-                <Motion13 type="Faulhaber"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="1024000" abs_id="14"/>
-                <Motion14 type="Faulhaber"  min_pos="0.504" max_pos="0.708" max_vel="0.9481" home_pos="-0.504" input2count="1024000" abs_id="12"/>
-                <Motion15 type="Faulhaber"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="1024000" abs_id="13"/>
-                <Motion16 type="Faulhaber"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="1024000" abs_id="10"/>
-                <Motion17 type="Faulhaber"  min_pos="0.504" max_pos="0.708" max_vel="0.9481" home_pos="-0.504" input2count="1024000" abs_id="9"/>
-                <Motion18 type="Faulhaber"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="1024000" abs_id="11"/>
+                <Driver1  type="CopleyAE2"/>
+                <Driver2  type="CopleyAE2"/>
+                <Driver3  type="CopleyAE2"/>
+                <Driver4  type="CopleyAE2"/>
+                <Driver5  type="CopleyAE2"/>
+                <Driver6  type="CopleyAE2"/>
+                <Driver7  type="CopleyAE2"/>
+                <Driver8  type="CopleyAE2"/>
+                <Driver9  type="CopleyAE2"/>
             </Slave>
+            <LogicMotionAxis>
+                <Motion1  type="CopleyAE2_A"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="0.520" input2count="1024000" driver_id="0" abs_id="1"/>
+                <Motion2  type="CopleyAE2_B"  min_pos="0.504" max_pos="0.708" max_vel="0.9481" home_pos="0.504" input2count="1024000" driver_id="0" abs_id="0"/>
+                <Motion3  type="CopleyAE2_A"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="0.520" input2count="1024000" driver_id="1" abs_id="2"/>
+                <Motion4  type="CopleyAE2_B"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="0.520" input2count="1024000" driver_id="1" abs_id="5"/>
+                <Motion5  type="CopleyAE2_A"  min_pos="0.504" max_pos="0.708" max_vel="0.9481" home_pos="0.504" input2count="1024000" driver_id="2" abs_id="3"/>
+                <Motion6  type="CopleyAE2_B"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="0.520" input2count="1024000" driver_id="2" abs_id="4"/>
+                <Motion7  type="CopleyAE2_A"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="0.520" input2count="1024000" driver_id="3" abs_id="7"/>
+                <Motion8  type="CopleyAE2_B"  min_pos="0.504" max_pos="0.708" max_vel="0.9481" home_pos="0.504" input2count="1024000" driver_id="3" abs_id="6"/>
+                <Motion9  type="CopleyAE2_A"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="0.520" input2count="1024000" driver_id="4" abs_id="8"/>
+                <Motion10 type="CopleyAE2_B"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="0.520" input2count="1024000" driver_id="4" abs_id="16"/>
+                <Motion11 type="CopleyAE2_A"  min_pos="0.504" max_pos="0.708" max_vel="0.9481" home_pos="0.504" input2count="1024000" driver_id="5" abs_id="15"/>
+                <Motion12 type="CopleyAE2_B"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="0.520" input2count="1024000" driver_id="5" abs_id="17"/>
+                <Motion13 type="CopleyAE2_A"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="0.520" input2count="1024000" driver_id="6" abs_id="14"/>
+                <Motion14 type="CopleyAE2_B"  min_pos="0.504" max_pos="0.708" max_vel="0.9481" home_pos="0.504" input2count="1024000" driver_id="6" abs_id="12"/>
+                <Motion15 type="CopleyAE2_A"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="0.520" input2count="1024000" driver_id="7" abs_id="13"/>
+                <Motion16 type="CopleyAE2_B"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="0.520" input2count="1024000" driver_id="7" abs_id="10"/>
+                <Motion17 type="CopleyAE2_A"  min_pos="0.504" max_pos="0.708" max_vel="0.9481" home_pos="0.504" input2count="1024000" driver_id="8" abs_id="9"/>
+                <Motion18 type="CopleyAE2_B"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="0.520" input2count="1024000" driver_id="8" abs_id="11"/>
+            </LogicMotionAxis>
         </EtherCat>
     </Controller>
     <Sensors>
