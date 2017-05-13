@@ -29,8 +29,7 @@ def main():
 
         print('\033[H File: %s\n Count: %s' % (dataFile.strip('\r\n'), timeStamp))
 
-        print(
-                '%4s%6s%12s%12s%12s%8s' %
+        print('%4s%6s%12s%12s%12s%8s' %
                 ('MOT', 'SW', 'TPOS', 'APOS', 'AVEL', 'ACUR'))
 
         dataLen = len(dataArray)
