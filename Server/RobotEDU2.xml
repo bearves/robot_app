@@ -711,24 +711,24 @@
                 <Driver18  type="ElmoSoloWhistle"/>
             </Slave>
             <LogicMotionAxis>
-                <Motion1  type="ElmoSoloWhistle"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="204800" driver_id="0" abs_id="1"/>
-                <Motion2  type="ElmoSoloWhistle"  min_pos="0.504" max_pos="0.708" max_vel="0.9481" home_pos="-0.504" input2count="204800" driver_id="1" abs_id="0"/>
-                <Motion3  type="ElmoSoloWhistle"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="204800" driver_id="2" abs_id="2"/>
-                <Motion4  type="ElmoSoloWhistle"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="204800" driver_id="3" abs_id="4"/>
-                <Motion5  type="ElmoSoloWhistle"  min_pos="0.504" max_pos="0.708" max_vel="0.9481" home_pos="-0.504" input2count="204800" driver_id="4" abs_id="3"/>
-                <Motion6  type="ElmoSoloWhistle"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="204800" driver_id="5" abs_id="5"/>
-                <Motion7  type="ElmoSoloWhistle"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="204800" driver_id="6" abs_id="7"/>
-                <Motion8  type="ElmoSoloWhistle"  min_pos="0.504" max_pos="0.708" max_vel="0.9481" home_pos="-0.504" input2count="204800" driver_id="7" abs_id="6"/>
-                <Motion9  type="ElmoSoloWhistle"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="204800" driver_id="8" abs_id="8"/>
-                <Motion10 type="ElmoSoloWhistle"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="204800" driver_id="9" abs_id="16"/>
-                <Motion11 type="ElmoSoloWhistle"  min_pos="0.504" max_pos="0.708" max_vel="0.9481" home_pos="-0.504" input2count="204800" driver_id="10" abs_id="15"/>
-                <Motion12 type="ElmoSoloWhistle"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="204800" driver_id="11" abs_id="17"/>
-                <Motion13 type="ElmoSoloWhistle"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="204800" driver_id="12" abs_id="13"/>
-                <Motion14 type="ElmoSoloWhistle"  min_pos="0.504" max_pos="0.708" max_vel="0.9481" home_pos="-0.504" input2count="204800" driver_id="13" abs_id="12"/>
-                <Motion15 type="ElmoSoloWhistle"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="204800" driver_id="14" abs_id="14"/>
-                <Motion16 type="ElmoSoloWhistle"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="204800" driver_id="15" abs_id="10"/>
-                <Motion17 type="ElmoSoloWhistle"  min_pos="0.504" max_pos="0.708" max_vel="0.9481" home_pos="-0.504" input2count="204800" driver_id="16" abs_id="9"/>
-                <Motion18 type="ElmoSoloWhistle"  min_pos="0.520" max_pos="0.724" max_vel="0.9481" home_pos="-0.520" input2count="204800" driver_id="17" abs_id="11"/>
+                <Motion1  type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="-0.5855" input2count="204800" driver_id="0" abs_id="1"/>
+                <Motion2  type="ElmoSoloWhistle"  min_pos="0.5670" max_pos="0.776" max_vel="0.9481" home_pos="-0.5670" input2count="204800" driver_id="1" abs_id="0"/>
+                <Motion3  type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="-0.5855" input2count="204800" driver_id="2" abs_id="2"/>
+                <Motion4  type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="-0.5855" input2count="204800" driver_id="3" abs_id="4"/>
+                <Motion5  type="ElmoSoloWhistle"  min_pos="0.5670" max_pos="0.776" max_vel="0.9481" home_pos="-0.5670" input2count="204800" driver_id="4" abs_id="3"/>
+                <Motion6  type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="-0.5855" input2count="204800" driver_id="5" abs_id="5"/>
+                <Motion7  type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="-0.5855" input2count="204800" driver_id="6" abs_id="7"/>
+                <Motion8  type="ElmoSoloWhistle"  min_pos="0.5670" max_pos="0.776" max_vel="0.9481" home_pos="-0.5670" input2count="204800" driver_id="7" abs_id="6"/>
+                <Motion9  type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="-0.5855" input2count="204800" driver_id="8" abs_id="8"/>
+                <Motion10 type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="-0.5855" input2count="204800" driver_id="9" abs_id="16"/>
+                <Motion11 type="ElmoSoloWhistle"  min_pos="0.5670" max_pos="0.776" max_vel="0.9481" home_pos="-0.5670" input2count="204800" driver_id="10" abs_id="15"/>
+                <Motion12 type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="-0.5855" input2count="204800" driver_id="11" abs_id="17"/>
+                <Motion13 type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="-0.5855" input2count="204800" driver_id="12" abs_id="13"/>
+                <Motion14 type="ElmoSoloWhistle"  min_pos="0.5670" max_pos="0.776" max_vel="0.9481" home_pos="-0.5670" input2count="204800" driver_id="13" abs_id="12"/>
+                <Motion15 type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="-0.5855" input2count="204800" driver_id="14" abs_id="14"/>
+                <Motion16 type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="-0.5855" input2count="204800" driver_id="15" abs_id="10"/>
+                <Motion17 type="ElmoSoloWhistle"  min_pos="0.5670" max_pos="0.776" max_vel="0.9481" home_pos="-0.5670" input2count="204800" driver_id="16" abs_id="9"/>
+                <Motion18 type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="-0.5855" input2count="204800" driver_id="17" abs_id="11"/>
             </LogicMotionAxis>
         </EtherCat>
     </Controller>
