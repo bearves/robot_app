@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 	}
 	else if (std::string(argv[1]) == "FH")
 	{
-		xml_address = "../../Server/Robot_Faulhaber.xml";
+		xml_address = "../../Server/RobotFaulhaber.xml";
 	}
 	else if (std::string(argv[1]) == "CP")
 	{
@@ -44,11 +44,11 @@ int main(int argc, char *argv[])
 	}
 	else if (std::string(argv[1]) == "EL")
 	{
-		xml_address = "../../Server/Robot_Elmo.xml";
+		xml_address = "../../Server/RobotElmo.xml";
 	}
 	else if (std::string(argv[1]) == "EDU")
 	{
-		xml_address = "../../Server/RobotEdu.xml";
+		xml_address = "../../Server/RobotEDU.xml";
 	}
 	else if (std::string(argv[1]) == "EDU2")
 	{
