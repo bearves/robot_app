@@ -12,6 +12,10 @@ using namespace std;
 #include <Robot_Gait.h>
 #include <Robot_Type_I.h>
 
+#include "swing.h"
+#include "move_body.h"
+#include "twist_waist.h"
+
 #ifdef WIN32
 #define rt_printf printf
 #endif
@@ -70,6 +74,9 @@ int main(int argc, char *argv[])
 	rs.addCmd("rc", Robots::recoverParse, Robots::recoverGait);
 	rs.addCmd("wk", Robots::walkParse, Robots::walkGait);
 	rs.addCmd("ro", Robots::resetOriginParse, Robots::resetOriginGait);
+	rs.addCmd("mb", moveBodyParse, moveBodyGait);
+	rs.addCmd("sw", swingParse, swingGait);
+	rs.addCmd("tw", twistWaistParse, twistWaistGait);
 
 	rs.open();
 
@@ -85,7 +92,5 @@ int main(int argc, char *argv[])
 	});
 	aris::core::runMsgLoop();
 	
-	
-
 	return 0;
 }
