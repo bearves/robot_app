@@ -771,9 +771,9 @@
                 <Motion13 type="ElmoSoloWhistle"  min_pos="0.5830" max_pos="0.7900" max_vel="0.9481" home_pos="-0.5830" input2count="204800" driver_id="12" abs_id="13"/>
                 <Motion14 type="ElmoSoloWhistle"  min_pos="0.5675" max_pos="0.7745" max_vel="0.9481" home_pos="-0.5675" input2count="204800" driver_id="13" abs_id="12"/>
                 <Motion15 type="ElmoSoloWhistle"  min_pos="0.5830" max_pos="0.7900" max_vel="0.9481" home_pos="-0.5830" input2count="204800" driver_id="14" abs_id="14"/>
-                <Motion16 type="ElmoSoloWhistle"  min_pos="0.5830" max_pos="0.7900" max_vel="0.9481" home_pos="-0.5830" input2count="204800" driver_id="15" abs_id="10"/>
-                <Motion17 type="ElmoSoloWhistle"  min_pos="0.5675" max_pos="0.7745" max_vel="0.9481" home_pos="-0.5675" input2count="204800" driver_id="16" abs_id="9"/>
-                <Motion18 type="ElmoSoloWhistle"  min_pos="0.5830" max_pos="0.7900" max_vel="0.9481" home_pos="-0.5830" input2count="204800" driver_id="17" abs_id="11"/>
+                <Motion16 type="ElmoSoloWhistle"  min_pos="0.5830" max_pos="0.7900" max_vel="0.9481" home_pos="-0.5820" input2count="204800" driver_id="15" abs_id="10"/>
+                <Motion17 type="ElmoSoloWhistle"  min_pos="0.5675" max_pos="0.7745" max_vel="0.9481" home_pos="-0.5665" input2count="204800" driver_id="16" abs_id="9"/>
+                <Motion18 type="ElmoSoloWhistle"  min_pos="0.5830" max_pos="0.7900" max_vel="0.9481" home_pos="-0.5820" input2count="204800" driver_id="17" abs_id="11"/>
             </LogicMotionAxis>
         </EtherCat>
     </Controller>
