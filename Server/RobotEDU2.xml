@@ -525,10 +525,10 @@
             </rc>
             <wk default="wk_param">
                 <wk_param type="group">
-                    <totalCount abbreviation="t" type="int" default="3000"/>
+                    <totalCount abbreviation="t" type="int" default="1000"/>
                     <n abbreviation="n" type="int" default="1"/>
-                    <distance abbreviation="d" type="double" default="0.5"/>
-                    <height abbreviation="h" type="double" default="0.05"/>
+                    <distance abbreviation="d" type="double" default="0.2"/>
+                    <height abbreviation="h" type="double" default="0.035"/>
                     <alpha abbreviation="a" type="double" default="0"/>
                     <beta abbreviation="b" type="double" default="0"/>
                 </wk_param>
