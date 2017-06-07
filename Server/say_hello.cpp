@@ -131,7 +131,7 @@ auto sayHelloGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBas
     //第三步：晃前腿打招呼
     else if (param.count < (2 + n) * param.totalCount)
     {
-        const double s = 2 * PI * (param.count + 1 - 2 * param.totalCount) / param.totalCount; //s从0到2*n*PI.
+        const double s = -PI * std::cos(PI * (param.count % param.totalCount + 1) / param.totalCount) + PI; //s从0到2*n*PI.
         std::copy(targetPeb, targetPeb + 6, Peb);
         std::copy(state2Pee, state2Pee + 18, Pee);
         for (int i = 0; i < 6; i += 3)

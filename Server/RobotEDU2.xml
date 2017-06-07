@@ -521,6 +521,7 @@
                     <t1 abbreviation="t" type="intArray" default="1500"/>
                     <t2 abbreviation="r" type="intArray" default="1500"/>
                     <margin_offset abbreviation="m" type="double" default="0.01"/>
+                    <zero abbreviation="z" type="intArray" default="0" />
                 </rc_param>
             </rc>
             <wk default="wk_param">
