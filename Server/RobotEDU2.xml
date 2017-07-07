@@ -532,14 +532,59 @@
             </zrc>
             <wk default="wk_param">
                 <wk_param type="group">
-                    <totalCount abbreviation="t" type="int" default="3000"/>
+                    <totalCount abbreviation="t" type="int" default="1000"/>
                     <n abbreviation="n" type="int" default="1"/>
-                    <distance abbreviation="d" type="double" default="0.5"/>
-                    <height abbreviation="h" type="double" default="0.05"/>
+                    <distance abbreviation="d" type="double" default="0.25"/>
+                    <height abbreviation="h" type="double" default="0.04"/>
                     <alpha abbreviation="a" type="double" default="0"/>
                     <beta abbreviation="b" type="double" default="0"/>
                 </wk_param>
             </wk>
+            <mb default="mb_param">
+                <mb_param type="group">
+                    <totalCount abbreviation="t" type="int" default="2000"/>
+                    <x abbreviation="x" type="double" default="0"/>
+                    <y abbreviation="y" type="double" default="0"/>
+                    <z abbreviation="z" type="double" default="0"/>
+                    <pitch abbreviation="u" type="double" default="0"/>
+                    <yaw abbreviation="v" type="double" default="0"/>
+                    <roll abbreviation="w" type="double" default="0"/>
+                </mb_param>
+            </mb>
+	    <sh default="sh_param">
+		    <sh_param type="group">
+			    <totalCount abbreviation="t" type="int" default="2000"/>
+			    <stepLength abbreviation="d" type="double" default="0.2"/>
+			    <stepHeight abbreviation="h" type="double" default="0.05"/>
+			    <bodyUp abbreviation="u" type="double" default="0.04"/>
+			    <bodyPitch abbreviation="p" type="double" default="20"/>
+			    <helloAmplitude abbreviation="a" type="double" default="0.1"/>
+			    <helloTimes abbreviation="n" type="int" default="1"/>
+			    <direction type="unique" default="backward">
+			    <forward abbreviation="f"/>
+			    <backward abbreviation="b"/>
+			    </direction>
+		    </sh_param>
+	    </sh>
+            <sw default="sw_param">
+                <sw_param type="group">
+                    <totalCount abbreviation="t" type="int" default="8000"/>
+                    <xAngle abbreviation="x" type="double" default="0"/>
+                    <zAngle abbreviation="z" type="double" default="0"/>
+                    <yAngle abbreviation="y" type="double" default="0"/>
+                    <rDistance abbreviation="r" type="double" default="0.5"/>
+                    <yDistance abbreviation="d" type="double" default="-0.05"/>
+                </sw_param>
+            </sw>
+            <tw default="tw_param">
+                <tw_param type="group">
+                    <totalCount abbreviation="t" type="int" default="12000"/>
+                    <pitchMax abbreviation="p" type="double" default="15"/>
+                    <rollMax abbreviation="r" type="double" default="15"/>
+                    <diameter abbreviation="d" type="double" default="0.05"/>
+                    <height abbreviation="h" type="double" default="0"/>
+                </tw_param>
+            </tw>
             <ro/>
         </Commands>
     </Server>
