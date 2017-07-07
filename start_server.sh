@@ -1,5 +1,5 @@
 #!/bin/sh
 
-cd /home/hex/Projects/robots_app/build/bin
+cd /root/robots_app/build/bin
 
-./Server EDU2
+python2.7 /root/robots_app/udpserver.py

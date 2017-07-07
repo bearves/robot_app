@@ -15,7 +15,7 @@ def main():
         # update the watch target file every 25 cycles
         if count % 25 == 0:
             dataFile = subprocess.check_output(
-                    'find `pwd` -regex ".*data.txt" | xargs ls -t | head -1',
+                    'find /var/log/aris -regex ".*data.txt" | xargs ls -t | head -1',
                     shell=True)
 
         count += 1
