@@ -628,6 +628,7 @@
                         <homeOffset index="0x607C" subindex="0" type="int32" config="0"/>
                         <MaxAccel index="0x60c5" subindex="0" type="uint32" config="200000000"/>
                         <MaxDecel index="0x60c6" subindex="0" type="uint32" config="200000000"/>
+                        <PositionFollowWindow index="0x6065" subindex="0" type="uint32" config="20480"/>
                     </SDO>
                 </ElmoSoloWhistle>
                 <Faulhaber product_code="0x00002d51" vender_id="0x00000147" alias="0" distributed_clock="0x0300">
