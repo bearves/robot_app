@@ -479,7 +479,7 @@
             <RR_F3 type="single_component_force" active="true" prt_m="RR_P3b" prt_n="RR_P3a" mak_i="P3i" mak_j="P3j" component="2"/>
         </Force>
     </Model>
-    <Server ip="127.0.0.1" port="5866">
+    <Server ip="0.0.0.0" port="5866">
         <Commands>
             <start/>
             <stop/>
