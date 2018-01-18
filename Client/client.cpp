@@ -2,33 +2,15 @@
 
 int sendRequest(int argc, char *argv[], const char *xmlFileName)
 {
-	// 需要去除命令名的路径和扩展名 //
 	std::string cmdName(argv[0]);
 
-#ifdef WIN32
-	if (cmdName.rfind('\\'))
-	{
-		cmdName = cmdName.substr(cmdName.rfind('\\') + 1, cmdName.npos);
-	}
-#endif
-#ifdef UNIX
-	if (cmdName.rfind('/'))
-	{
-		cmdName = cmdName.substr(cmdName.rfind('/') + 1, cmdName.npos);
-	}
-#endif
-
-	if (cmdName.rfind('.'))
-	{
-		cmdName = cmdName.substr(0, cmdName.rfind('.'));
-	}
-
-	// 添加命令的所有参数 //
 	for (int i = 1; i < argc; ++i)
 	{
 		cmdName = cmdName + " " + argv[i];
 	}
 
+    std::cout << "CMD is " <<  cmdName << std::endl;
+     
 	// 构造msg，这里需要先copy命令名称，然后依次copy各个参数 //
 	aris::core::Msg msg;
 	msg.copy(cmdName.c_str());
@@ -36,7 +18,8 @@ int sendRequest(int argc, char *argv[], const char *xmlFileName)
 	// 连接并发送msg //
 	aris::core::XmlDocument doc;
 
-	if (doc.LoadFile(xmlFileName) != 0)	throw std::logic_error("failed to read configuration xml file");
+	if (doc.LoadFile(xmlFileName) != 0)	
+        throw std::logic_error("failed to read configuration xml file");
 
 	std::string ip = doc.RootElement()->FirstChildElement("Server")->Attribute("ip");
 	std::string port = doc.RootElement()->FirstChildElement("Server")->Attribute("port");
@@ -76,14 +59,11 @@ int sendRequest(int argc, char *argv[], const char *xmlFileName)
 
 int main(int argc, char *argv[])
 {
-	if (argc <= 1)throw std::runtime_error("please input the cmd name");
+	if (argc <= 1)
+        throw std::runtime_error("please input the cmd name");
 
-#ifdef UNIX
-    sendRequest(argc - 1, argv + 1, "/usr/Robots/resource/Robot_Type_I/Robot_XII/Robot_XII.xml");
-#endif
-#ifdef WIN32
-    sendRequest(argc - 1, argv + 1, "C:\\Robots\\resource\\Robot_Type_I\\Robot_XII\\Robot_XII.xml");
-#endif
+    // use relative path
+    sendRequest(argc - 1, argv + 1, "../../Server/RobotO13.xml");
 
 	return 0;
 }

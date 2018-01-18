@@ -28,10 +28,10 @@ ENDFUNCTION(PREPEND_H)
 project(robot_app)
 
 if(UNIX)
-#	set(CMAKE_C_COMPILER "/usr/bin/gcc-4.8")
-#	set(CMAKE_CXX_COMPILER "/usr/bin/g++-4.8")
-	set(CMAKE_C_COMPILER "/usr/bin/clang")
-	set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
+	set(CMAKE_C_COMPILER "/usr/bin/gcc-4.8")
+	set(CMAKE_CXX_COMPILER "/usr/bin/g++-4.8")
+    #set(CMAKE_C_COMPILER "/usr/bin/clang")
+    #set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
 endif(UNIX)
 
 # set binary and library folders
@@ -69,14 +69,13 @@ set(ETHERLAB_LINK_DIR "/usr/Aris_Dependent/etherlab/lib")
 set(ETHERLAB_LINK_LIB ethercat_rtdm rt)
 set(ARIS_INCL_DIR "/usr/aris/include")
 set(ARIS_LINK_DIR "/usr/aris/lib")
-set(ARIS_LINK_LIB aris_server aris_dynamic aris_control aris_core)
-set(ROBOTS_INCL_DIR "/usr/Robots/include")
-set(ROBOTS_LINK_DIR "/usr/Robots/lib")
-set(ROBOTS_LINK_LIB Robot_Type_I Robot_Type_II Robot_Base)
+set(ARIS_LINK_LIB aris_server aris_model aris_control aris_core)
+set(NRT_ARIS_LINK_LIB  aris_core)
 
-set(ALL_INCL_DIR ${ROBOTS_INCL_DIR} ${ARIS_INCL_DIR} ${ETHERLAB_INCL_DIR} ${XENOMAI_INCL_DIR} ${GENERAL_INCL_DIR})
-set(ALL_LINK_DIR ${ROBOTS_LINK_DIR} ${ARIS_LINK_DIR} ${ETHERLAB_LINK_DIR} ${XENOMAI_LINK_DIR})
-set(ALL_LINK_LIB ${ROBOTS_LINK_LIB} ${ARIS_LINK_LIB} ${ETHERLAB_LINK_LIB} ${XENOMAI_LINK_LIB} ${SYSTEM_LINK_LIB})
+set(ALL_INCL_DIR ${ARIS_INCL_DIR} ${ETHERLAB_INCL_DIR} ${XENOMAI_INCL_DIR} ${GENERAL_INCL_DIR})
+set(ALL_LINK_DIR ${ARIS_LINK_DIR} ${ETHERLAB_LINK_DIR} ${XENOMAI_LINK_DIR})
+set(ALL_LINK_LIB ${ARIS_LINK_LIB} ${ETHERLAB_LINK_LIB} ${XENOMAI_LINK_LIB} ${SYSTEM_LINK_LIB})
+set(NRT_LINK_LIB ${NRT_ARIS_LINK_LIB} ${SYSTEM_LINK_LIB})
 endif(UNIX)
 if(WIN32)
 set(GENERAL_INCL_DIR "C:/Aris_Dependent")
@@ -86,28 +85,25 @@ set(XSENS_LINK_DIR "C:/Aris_Dependent/xsens/lib")
 set(XSENS_LINK_LIB xdeviceclass)
 set(ARIS_INCL_DIR "C:/Aris/include")
 set(ARIS_LINK_DIR "C:/Aris/lib")
-set(ARIS_LINK_LIB aris_server aris_sensor aris_dynamic aris_control aris_core)
-set(ROBOTS_INCL_DIR "C:/Robots/include")
-set(ROBOTS_LINK_DIR "C:/Robots/lib")
-set(ROBOTS_LINK_LIB Robot_Type_I Robot_Type_II Robot_Base)
+set(ARIS_LINK_LIB aris_server aris_sensor aris_model aris_control aris_core)
 
-set(ALL_INCL_DIR ${ROBOTS_INCL_DIR} ${ARIS_INCL_DIR} ${XSENS_INCL_DIR} ${ETHERLAB_INCL_DIR} ${XENOMAI_INCL_DIR} ${GENERAL_INCL_DIR})
-set(ALL_LINK_DIR ${ROBOTS_LINK_DIR} ${ARIS_LINK_DIR} ${XSENS_LINK_DIR} )
-set(ALL_LINK_LIB ${ROBOTS_LINK_LIB} ${ARIS_LINK_LIB} ${XSENS_LINK_LIB} ${SYSTEM_LINK_LIB})
+set(ALL_INCL_DIR  ${ARIS_INCL_DIR} ${XSENS_INCL_DIR} ${ETHERLAB_INCL_DIR} ${XENOMAI_INCL_DIR} ${GENERAL_INCL_DIR})
+set(ALL_LINK_DIR  ${ARIS_LINK_DIR} ${XSENS_LINK_DIR} )
+set(ALL_LINK_LIB  ${ARIS_LINK_LIB} ${XSENS_LINK_LIB} ${SYSTEM_LINK_LIB})
 endif(WIN32)
 
 include_directories(${ALL_INCL_DIR})
 link_directories(${ALL_LINK_DIR})
 
 ################################### build server ####################################
-set(SOURCE_FILES main.cpp move_body.cpp swing.cpp twist_waist.cpp say_hello.cpp)
+set(SOURCE_FILES main.cpp )
 PREPEND(FULL_SRC Server ${SOURCE_FILES})
 add_executable(Server ${FULL_SRC})
 target_link_libraries(Server ${ALL_LINK_LIB})
 
 ################################### build client ####################################
 add_executable(rbt Client/client.cpp)
-target_link_libraries(rbt ${ALL_LINK_LIB})
+target_link_libraries(rbt ${NRT_LINK_LIB})
 
 ################################### install ####################################
 if(UNIX)
@@ -118,29 +114,5 @@ if(WIN32)
 endif(WIN32)
 
 install(TARGETS Server rbt RUNTIME DESTINATION bin)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

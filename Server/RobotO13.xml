@@ -532,14 +532,59 @@
             </zrc>
             <wk default="wk_param">
                 <wk_param type="group">
-                    <totalCount abbreviation="t" type="int" default="3000"/>
+                    <totalCount abbreviation="t" type="int" default="1000"/>
                     <n abbreviation="n" type="int" default="1"/>
-                    <distance abbreviation="d" type="double" default="0.5"/>
-                    <height abbreviation="h" type="double" default="0.05"/>
+                    <distance abbreviation="d" type="double" default="0.25"/>
+                    <height abbreviation="h" type="double" default="0.04"/>
                     <alpha abbreviation="a" type="double" default="0"/>
                     <beta abbreviation="b" type="double" default="0"/>
                 </wk_param>
             </wk>
+            <mb default="mb_param">
+                <mb_param type="group">
+                    <totalCount abbreviation="t" type="int" default="2000"/>
+                    <x abbreviation="x" type="double" default="0"/>
+                    <y abbreviation="y" type="double" default="0"/>
+                    <z abbreviation="z" type="double" default="0"/>
+                    <pitch abbreviation="u" type="double" default="0"/>
+                    <yaw abbreviation="v" type="double" default="0"/>
+                    <roll abbreviation="w" type="double" default="0"/>
+                </mb_param>
+            </mb>
+	    <sh default="sh_param">
+		    <sh_param type="group">
+			    <totalCount abbreviation="t" type="int" default="2000"/>
+			    <stepLength abbreviation="d" type="double" default="0.2"/>
+			    <stepHeight abbreviation="h" type="double" default="0.05"/>
+			    <bodyUp abbreviation="u" type="double" default="0.04"/>
+			    <bodyPitch abbreviation="p" type="double" default="20"/>
+			    <helloAmplitude abbreviation="a" type="double" default="0.1"/>
+			    <helloTimes abbreviation="n" type="int" default="1"/>
+			    <direction type="unique" default="backward">
+			    <forward abbreviation="f"/>
+			    <backward abbreviation="b"/>
+			    </direction>
+		    </sh_param>
+	    </sh>
+            <sw default="sw_param">
+                <sw_param type="group">
+                    <totalCount abbreviation="t" type="int" default="8000"/>
+                    <xAngle abbreviation="x" type="double" default="0"/>
+                    <zAngle abbreviation="z" type="double" default="0"/>
+                    <yAngle abbreviation="y" type="double" default="0"/>
+                    <rDistance abbreviation="r" type="double" default="0.5"/>
+                    <yDistance abbreviation="d" type="double" default="-0.05"/>
+                </sw_param>
+            </sw>
+            <tw default="tw_param">
+                <tw_param type="group">
+                    <totalCount abbreviation="t" type="int" default="12000"/>
+                    <pitchMax abbreviation="p" type="double" default="15"/>
+                    <rollMax abbreviation="r" type="double" default="15"/>
+                    <diameter abbreviation="d" type="double" default="0.05"/>
+                    <height abbreviation="h" type="double" default="0"/>
+                </tw_param>
+            </tw>
             <ro/>
         </Commands>
     </Server>
@@ -583,6 +628,7 @@
                         <homeOffset index="0x607C" subindex="0" type="int32" config="0"/>
                         <MaxAccel index="0x60c5" subindex="0" type="uint32" config="200000000"/>
                         <MaxDecel index="0x60c6" subindex="0" type="uint32" config="200000000"/>
+                        <PositionFollowWindow index="0x6065" subindex="0" type="uint32" config="20480"/>
                     </SDO>
                 </ElmoSoloWhistle>
                 <Faulhaber product_code="0x00002d51" vender_id="0x00000147" alias="0" distributed_clock="0x0300">
@@ -674,76 +720,76 @@
                         <B_homeOffset index="0x687C" subindex="0" type="int32" config="0"/>
                     </SDO>
                 </CopleyAE2>
-		<RuiCongCombo product_code="0x00000036" vender_id="0xe000001b" alias="0">
-			<PDO>
-			  <index_1a01 index="0x1a01" is_tx="true">
-			    <Fx index="0x20d2" subindex="0x01" type="int32"/>
-			    <Fy index="0x20d2" subindex="0x02" type="int32"/>
-			    <Fz index="0x20d2" subindex="0x03" type="int32"/>
-			    <Mx index="0x20d2" subindex="0x04" type="int32"/>
-			    <My index="0x20d2" subindex="0x05" type="int32"/>
-			    <Mz index="0x20d2" subindex="0x06" type="int32"/>
-			  </index_1a01>
-              <!--
-			  <index_1a02 index="0x1a02" is_tx="true">
-			    <Fx index="0x20dc" subindex="0x01" type="int32"/>
-			    <Fy index="0x20dc" subindex="0x02" type="int32"/>
-			    <Fz index="0x20dc" subindex="0x03" type="int32"/>
-			    <Mx index="0x20dc" subindex="0x04" type="int32"/>
-			    <My index="0x20dc" subindex="0x05" type="int32"/>
-			    <Mz index="0x20dc" subindex="0x06" type="int32"/>
-			  </index_1a02>
-			  <index_1a03 index="0x1a03" is_tx="true">
-			    <Fx index="0x20e6" subindex="0x01" type="int32"/>
-			    <Fy index="0x20e6" subindex="0x02" type="int32"/>
-			    <Fz index="0x20e6" subindex="0x03" type="int32"/>
-			    <Mx index="0x20e6" subindex="0x04" type="int32"/>
-			    <My index="0x20e6" subindex="0x05" type="int32"/>
-			    <Mz index="0x20e6" subindex="0x06" type="int32"/>
-			  </index_1a03>
-			  <index_1a04 index="0x1a04" is_tx="true">
-			    <Fx index="0x20f0" subindex="0x01" type="int32"/>
-			    <Fy index="0x20f0" subindex="0x02" type="int32"/>
-			    <Fz index="0x20f0" subindex="0x03" type="int32"/>
-			    <Mx index="0x20f0" subindex="0x04" type="int32"/>
-			    <My index="0x20f0" subindex="0x05" type="int32"/>
-			    <Mz index="0x20f0" subindex="0x06" type="int32"/>
-			  </index_1a04>
-			  <index_1a05 index="0x1a05" is_tx="true">
-			    <Fx index="0x20fa" subindex="0x01" type="int32"/>
-			    <Fy index="0x20fa" subindex="0x02" type="int32"/>
-			    <Fz index="0x20fa" subindex="0x03" type="int32"/>
-			    <Mx index="0x20fa" subindex="0x04" type="int32"/>
-			    <My index="0x20fa" subindex="0x05" type="int32"/>
-			    <Mz index="0x20fa" subindex="0x06" type="int32"/>
-			  </index_1a05>
-			  <index_1a06 index="0x1a06" is_tx="true">
-			    <Fx index="0x2104" subindex="0x01" type="int32"/>
-			    <Fy index="0x2104" subindex="0x02" type="int32"/>
-			    <Fz index="0x2104" subindex="0x03" type="int32"/>
-			    <Mx index="0x2104" subindex="0x04" type="int32"/>
-			    <My index="0x2104" subindex="0x05" type="int32"/>
-			    <Mz index="0x2104" subindex="0x06" type="int32"/>
-			  </index_1a06>
-              -->
-			  <index_1600 index="0x1600" is_tx="false">
-			    <Sna index="0x2064" subindex="0x01" type="uint8"/>
-			  </index_1600>
-			  <index_1601 index="0x1601" is_tx="false">
-			    <Snr1 index="0x206e" subindex="0x01" type="uint8"/>
-			    <Snr2 index="0x206e" subindex="0x02" type="uint8"/>
-			    <Snr3 index="0x206e" subindex="0x03" type="uint8"/>
-			    <Snr4 index="0x206e" subindex="0x04" type="uint8"/>
-			    <Snr5 index="0x206e" subindex="0x05" type="uint8"/>
-			    <Snr6 index="0x206e" subindex="0x06" type="uint8"/>
-			    <Snr7 index="0x206e" subindex="0x07" type="uint8"/>
-			    <Snr8 index="0x206e" subindex="0x08" type="uint8"/>
-			  </index_1601>
-			</PDO>
-			<SDO>
-			  <Sync index="0x2064" subindex="0x0" type="uint8" write="false"/>
-			</SDO>
-		</RuiCongCombo>
+                <RuiCongCombo product_code="0x00000036" vender_id="0xe000001b" alias="0">
+                    <PDO>
+                      <index_1a01 index="0x1a01" is_tx="true">
+                        <Fx index="0x20d2" subindex="0x01" type="int32"/>
+                        <Fy index="0x20d2" subindex="0x02" type="int32"/>
+                        <Fz index="0x20d2" subindex="0x03" type="int32"/>
+                        <Mx index="0x20d2" subindex="0x04" type="int32"/>
+                        <My index="0x20d2" subindex="0x05" type="int32"/>
+                        <Mz index="0x20d2" subindex="0x06" type="int32"/>
+                      </index_1a01>
+                      <!--
+                      <index_1a02 index="0x1a02" is_tx="true">
+                        <Fx index="0x20dc" subindex="0x01" type="int32"/>
+                        <Fy index="0x20dc" subindex="0x02" type="int32"/>
+                        <Fz index="0x20dc" subindex="0x03" type="int32"/>
+                        <Mx index="0x20dc" subindex="0x04" type="int32"/>
+                        <My index="0x20dc" subindex="0x05" type="int32"/>
+                        <Mz index="0x20dc" subindex="0x06" type="int32"/>
+                      </index_1a02>
+                      <index_1a03 index="0x1a03" is_tx="true">
+                        <Fx index="0x20e6" subindex="0x01" type="int32"/>
+                        <Fy index="0x20e6" subindex="0x02" type="int32"/>
+                        <Fz index="0x20e6" subindex="0x03" type="int32"/>
+                        <Mx index="0x20e6" subindex="0x04" type="int32"/>
+                        <My index="0x20e6" subindex="0x05" type="int32"/>
+                        <Mz index="0x20e6" subindex="0x06" type="int32"/>
+                      </index_1a03>
+                      <index_1a04 index="0x1a04" is_tx="true">
+                        <Fx index="0x20f0" subindex="0x01" type="int32"/>
+                        <Fy index="0x20f0" subindex="0x02" type="int32"/>
+                        <Fz index="0x20f0" subindex="0x03" type="int32"/>
+                        <Mx index="0x20f0" subindex="0x04" type="int32"/>
+                        <My index="0x20f0" subindex="0x05" type="int32"/>
+                        <Mz index="0x20f0" subindex="0x06" type="int32"/>
+                      </index_1a04>
+                      <index_1a05 index="0x1a05" is_tx="true">
+                        <Fx index="0x20fa" subindex="0x01" type="int32"/>
+                        <Fy index="0x20fa" subindex="0x02" type="int32"/>
+                        <Fz index="0x20fa" subindex="0x03" type="int32"/>
+                        <Mx index="0x20fa" subindex="0x04" type="int32"/>
+                        <My index="0x20fa" subindex="0x05" type="int32"/>
+                        <Mz index="0x20fa" subindex="0x06" type="int32"/>
+                      </index_1a05>
+                      <index_1a06 index="0x1a06" is_tx="true">
+                        <Fx index="0x2104" subindex="0x01" type="int32"/>
+                        <Fy index="0x2104" subindex="0x02" type="int32"/>
+                        <Fz index="0x2104" subindex="0x03" type="int32"/>
+                        <Mx index="0x2104" subindex="0x04" type="int32"/>
+                        <My index="0x2104" subindex="0x05" type="int32"/>
+                        <Mz index="0x2104" subindex="0x06" type="int32"/>
+                      </index_1a06>
+                      -->
+                      <index_1600 index="0x1600" is_tx="false">
+                        <Sna index="0x2064" subindex="0x01" type="uint8"/>
+                      </index_1600>
+                      <index_1601 index="0x1601" is_tx="false">
+                        <Snr1 index="0x206e" subindex="0x01" type="uint8"/>
+                        <Snr2 index="0x206e" subindex="0x02" type="uint8"/>
+                        <Snr3 index="0x206e" subindex="0x03" type="uint8"/>
+                        <Snr4 index="0x206e" subindex="0x04" type="uint8"/>
+                        <Snr5 index="0x206e" subindex="0x05" type="uint8"/>
+                        <Snr6 index="0x206e" subindex="0x06" type="uint8"/>
+                        <Snr7 index="0x206e" subindex="0x07" type="uint8"/>
+                        <Snr8 index="0x206e" subindex="0x08" type="uint8"/>
+                      </index_1601>
+                    </PDO>
+                    <SDO>
+                      <Sync index="0x2064" subindex="0x0" type="uint8" write="false"/>
+                    </SDO>
+                </RuiCongCombo>
                 <AtiForceSensor product_code="0x26483052" vender_id="0x00000732" alias="0">
                     <PDO>
                         <index_1a00 index="0x1a00" is_tx="true">
@@ -766,9 +812,40 @@
                         <TorqueUnit index="0x2040" subindex="0x32" type="int32" write="false"/>
                     </SDO>
                 </AtiForceSensor>
+                <MeHeavyEIMU product_code="0x26483052" vender_id="0x00000947" alias="0">
+                    <PDO>
+                        <index_1a00 index="0x1a00" is_tx="true">
+                            <gx index="0x6000" subindex="0x01" type="int32"/>
+                            <gy index="0x6000" subindex="0x02" type="int32"/>
+                            <gz index="0x6000" subindex="0x03" type="int32"/>
+                        </index_1a00>
+                        <index_1a01 index="0x1a01" is_tx="true">
+                            <ax index="0x6010" subindex="0x01" type="int32"/>
+                            <ay index="0x6010" subindex="0x02" type="int32"/>
+                            <az index="0x6010" subindex="0x03" type="int32"/>
+                        </index_1a01>
+                        <index_1a02 index="0x1a02" is_tx="true">
+                            <dax index="0x6020" subindex="0x01" type="int32"/>
+                            <day index="0x6020" subindex="0x02" type="int32"/>
+                            <daz index="0x6020" subindex="0x03" type="int32"/>
+                        </index_1a02>
+                        <index_1a03 index="0x1a03" is_tx="true">
+                            <dvx index="0x6030" subindex="0x01" type="int32"/>
+                            <dvy index="0x6030" subindex="0x02" type="int32"/>
+                            <dvz index="0x6030" subindex="0x03" type="int32"/>
+                        </index_1a03>
+                        <index_1600 index="0x1600" is_tx="false">
+                            <reserve1 index="0x7000" subindex="0x01" type="int32"/>
+                            <reserve2 index="0x7000" subindex="0x02" type="int32"/>
+                            <reserve3 index="0x7000" subindex="0x03" type="int32"/>
+                            <reserve4 index="0x7000" subindex="0x04" type="int32"/>
+                        </index_1600>
+                    </PDO>
+                    <SDO>
+                    </SDO>
+                </MeHeavyEIMU>
             </SlaveType>
             <Slave>
-                <ForceSensor type="RuiCongCombo"/>
                 <Driver1   type="ElmoSoloWhistle"/>
                 <Driver2   type="ElmoSoloWhistle"/>
                 <Driver3   type="ElmoSoloWhistle"/>
@@ -787,6 +864,8 @@
                 <Driver16  type="ElmoSoloWhistle"/>
                 <Driver17  type="ElmoSoloWhistle"/>
                 <Driver18  type="ElmoSoloWhistle"/>
+                <ForceSensor type="RuiCongCombo"/>
+                <IMU1      type="MeHeavyEIMU"/>
             </Slave>
             <LogicMotionAxis>
                 <Motion1  type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="-0.5855" input2count="204800" driver_id="0" abs_id="1"/>
