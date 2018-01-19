@@ -6,7 +6,7 @@ import time
 import sys
 
 def main():
-    eleNum = 5
+    eleNum = 6
     count = 0
 
     os.system('clear')
@@ -29,20 +29,23 @@ def main():
 
         print('\033[H File: %s\n Count: %s' % (dataFile.strip('\r\n'), timeStamp))
 
-        print('%4s%6s%12s%12s%12s%8s' %
-                ('MOT', 'SW', 'TPOS', 'APOS', 'AVEL', 'ACUR'))
+        print('%4s%6s%12s%12s%12s%8s%8s' %
+                ('MOT', 'SW', 'TPOS', 'APOS', 'AVEL', 'ACUR', 'DGI'))
 
         dataLen = len(dataArray)
         readableMotorNum = int(dataLen / eleNum)
 
         for i in range(readableMotorNum):
-            print('%4s%6s%12s%12s%12s%8s' % (
+            print('%4s%6s%12s%12s%12s%8s%8d' % (
                 i,
                 dataArray[i*eleNum+0],
                 dataArray[i*eleNum+1],
                 dataArray[i*eleNum+2],
                 dataArray[i*eleNum+3],
-                dataArray[i*eleNum+4]))
+                dataArray[i*eleNum+4],
+                (int(dataArray[i*eleNum+5])&(1<<20))>>20
+                )
+            )
 
         time.sleep(0.2)
 

@@ -28,10 +28,10 @@ ENDFUNCTION(PREPEND_H)
 project(robot_app)
 
 if(UNIX)
-	set(CMAKE_C_COMPILER "/usr/bin/gcc-4.8")
-	set(CMAKE_CXX_COMPILER "/usr/bin/g++-4.8")
-    #set(CMAKE_C_COMPILER "/usr/bin/clang")
-    #set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
+    #set(CMAKE_C_COMPILER "/usr/bin/gcc-4.8")
+    #set(CMAKE_CXX_COMPILER "/usr/bin/g++-4.8")
+    set(CMAKE_C_COMPILER "/usr/bin/clang")
+    set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
 endif(UNIX)
 
 # set binary and library folders
