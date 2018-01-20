@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 	rs.addCmd("en", RobotApp::basicParse, nullptr);
 	rs.addCmd("ds", RobotApp::basicParse, nullptr);
 	rs.addCmd("hm", RobotApp::basicParse, nullptr);
-    rs.addCmd("jog", RobotApp::basicParse, nullptr);
+        rs.addCmd("jog", RobotApp::jogParse, nullptr);
 
 	rs.open();
 

@@ -32,16 +32,20 @@
                 <physical_motor abbreviation="p" type="intArray" default="0"/>
                 <leg abbreviation="l" type="intArray" default="0"/>
             </hm>
-            <jog default="all">
-                <all abbreviation="a"/>
-                <first abbreviation="f"/>
-                <second abbreviation="s"/>
-                <motor abbreviation="m" type="intArray" default="0"/>
-                <physical_motor abbreviation="p" type="intArray" default="0"/>
-                <leg abbreviation="l" type="intArray" default="0"/>
-                <vel abbreviation="v" type="intArray" default="90000"/>
-                <acc abbreviation="c" type="intArray" default="200000"/>
-                <stop abbreviation="q" type="intArray" default="0"/>
+            <jog default="jog_param">
+              <jog_param type="group" >
+                <motor_select type="unique" default="all">
+                  <all abbreviation="a"/>
+                  <first abbreviation="f"/>
+                  <second abbreviation="s"/>
+                  <motor abbreviation="m" type="intArray" default="0"/>
+                  <physical_motor abbreviation="p" type="intArray" default="0"/>
+                  <leg abbreviation="l" type="intArray" default="0"/>
+                </motor_select>
+                <vel abbreviation="v" type="int" default="90000"/>
+                <acc abbreviation="c" type="int" default="200000"/>
+                <stop abbreviation="q" type="int" default="0"/>
+              </jog_param>
             </jog>
             <fake_home/>
         </Commands>
