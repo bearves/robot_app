@@ -41,3 +41,7 @@ build
 *.exe
 *.out
 *.app
+
+# IDE files
+*.swp
+.ycm*
