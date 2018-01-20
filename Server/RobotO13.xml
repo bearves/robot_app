@@ -32,6 +32,14 @@
                 <physical_motor abbreviation="p" type="intArray" default="0"/>
                 <leg abbreviation="l" type="intArray" default="0"/>
             </hm>
+            <jog default="all">
+                <all abbreviation="a"/>
+                <first abbreviation="f"/>
+                <second abbreviation="s"/>
+                <motor abbreviation="m" type="intArray" default="0"/>
+                <physical_motor abbreviation="p" type="intArray" default="0"/>
+                <leg abbreviation="l" type="intArray" default="0"/>
+            </jog>
             <fake_home/>
         </Commands>
     </Server>
@@ -265,11 +273,6 @@
                 <Driver11  type="ElmoSoloWhistle"/>
                 <Driver12  type="ElmoSoloWhistle"/>
                 <Driver13  type="ElmoSoloWhistle"/>
-                <Driver14  type="ElmoSoloWhistle"/>
-                <Driver15  type="ElmoSoloWhistle"/>
-                <Driver16  type="ElmoSoloWhistle"/>
-                <Driver17  type="ElmoSoloWhistle"/>
-                <Driver18  type="ElmoSoloWhistle"/>
                 <!--
                 <ForceSensor type="RuiCongCombo"/>
                 <IMU1      type="MeHeavyEIMU"/>
@@ -285,15 +288,10 @@
                 <Motion7  type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="0.5855" input2count="204800" driver_id="6" abs_id="7"/>
                 <Motion8  type="ElmoSoloWhistle"  min_pos="0.5670" max_pos="0.776" max_vel="0.9481" home_pos="0.5670" input2count="204800" driver_id="7" abs_id="6"/>
                 <Motion9  type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="0.5855" input2count="204800" driver_id="8" abs_id="8"/>
-                <Motion10 type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="0.5855" input2count="204800" driver_id="9" abs_id="16"/>
-                <Motion11 type="ElmoSoloWhistle"  min_pos="0.5670" max_pos="0.776" max_vel="0.9481" home_pos="0.5670" input2count="204800" driver_id="10" abs_id="15"/>
-                <Motion12 type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="0.5855" input2count="204800" driver_id="11" abs_id="17"/>
-                <Motion13 type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="0.5855" input2count="204800" driver_id="12" abs_id="13"/>
-                <Motion14 type="ElmoSoloWhistle"  min_pos="0.5670" max_pos="0.776" max_vel="0.9481" home_pos="0.5670" input2count="204800" driver_id="13" abs_id="12"/>
-                <Motion15 type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="0.5855" input2count="204800" driver_id="14" abs_id="14"/>
-                <Motion16 type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="0.5855" input2count="204800" driver_id="15" abs_id="10"/>
-                <Motion17 type="ElmoSoloWhistle"  min_pos="0.5670" max_pos="0.776" max_vel="0.9481" home_pos="0.5670" input2count="204800" driver_id="16" abs_id="9"/>
-                <Motion18 type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="0.5855" input2count="204800" driver_id="17" abs_id="11"/>
+                <Motion10 type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="0.5855" input2count="204800" driver_id="9" abs_id="9"/>
+                <Motion11 type="ElmoSoloWhistle"  min_pos="0.5670" max_pos="0.776" max_vel="0.9481" home_pos="0.5670" input2count="204800" driver_id="10" abs_id="10"/>
+                <Motion12 type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="0.5855" input2count="204800" driver_id="11" abs_id="11"/>
+                <Motion13 type="ElmoSoloWhistle"  min_pos="0.5855" max_pos="0.7945" max_vel="0.9481" home_pos="0.5855" input2count="204800" driver_id="12" abs_id="12"/>
             </LogicMotionAxis>
         </EtherCat>
     </Controller>
