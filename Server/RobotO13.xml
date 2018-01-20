@@ -39,6 +39,9 @@
                 <motor abbreviation="m" type="intArray" default="0"/>
                 <physical_motor abbreviation="p" type="intArray" default="0"/>
                 <leg abbreviation="l" type="intArray" default="0"/>
+                <vel abbreviation="v" type="intArray" default="90000"/>
+                <acc abbreviation="c" type="intArray" default="200000"/>
+                <stop abbreviation="q" type="intArray" default="0"/>
             </jog>
             <fake_home/>
         </Commands>

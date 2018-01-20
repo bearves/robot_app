@@ -6,12 +6,9 @@
 namespace RobotApp
 {
 
-
-auto basicParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void
+void motorSelector(const std::map<std::string, std::string> &dom, aris::server::BasicFunctionParam &param)
 {
-    aris::server::BasicFunctionParam param;
-
-    for (auto &i : params)
+    for (auto &i : dom)
     {
         if (i.first == "all")
         {
@@ -56,6 +53,38 @@ auto basicParse(const std::string &cmd, const std::map<std::string, std::string>
 
             std::fill_n(param.active_motor, 13, false);
             std::fill_n(param.active_motor + leg_id * 2, 2, true);
+        }
+    }
+}
+
+auto basicParse(const std::string &cmd, const std::map<std::string, std::string> &dom, aris::core::Msg &msg_out)->void
+{
+    aris::server::BasicFunctionParam param;
+
+    motorSelector(dom, param);
+
+    msg_out.copyStruct(param);
+}
+
+auto jogParse(const std::string &cmd, const std::map<std::string, std::string> &dom, aris::core::Msg &msg_out)->void
+{
+    aris::server::JogFunctionParam param;
+
+    motorSelector(dom, param);
+
+    for (auto i : dom)
+    {
+        if (i.first == "vel")
+        {
+            param.jog_velocity_in_count = std::stoi(i.second);
+        }
+        else if (i.first == "acc")
+        {
+            param.jog_accel_in_count = std::stoi(i.second);
+        }
+        else if (i.first == "stop")
+        {
+            param.requireStop = (std::stoi(i.second)) == 1 ? true : false;
         }
     }
 
