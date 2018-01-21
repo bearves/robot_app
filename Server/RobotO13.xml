@@ -32,6 +32,20 @@
                 <physical_motor abbreviation="p" type="intArray" default="0"/>
                 <leg abbreviation="l" type="intArray" default="0"/>
             </hm>
+            <hmsw default="hmsw_param">
+              <hmsw_param type="group" >
+                <motor_select type="unique" default="all">
+                  <all abbreviation="a"/>
+                  <first abbreviation="f"/>
+                  <second abbreviation="s"/>
+                  <motor abbreviation="m" type="intArray" default="0"/>
+                  <physical_motor abbreviation="p" type="intArray" default="0"/>
+                  <leg abbreviation="l" type="intArray" default="0"/>
+                </motor_select>
+                <vel abbreviation="v" type="int" default="20000"/>
+                <acc abbreviation="c" type="int" default="200000"/>
+              </hmsw_param>
+            </hmsw>
             <jog default="jog_param">
               <jog_param type="group" >
                 <motor_select type="unique" default="all">

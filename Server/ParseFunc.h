@@ -66,6 +66,27 @@ auto basicParse(const std::string &cmd, const std::map<std::string, std::string>
     msg_out.copyStruct(param);
 }
 
+auto hmswParse(const std::string &cmd, const std::map<std::string, std::string> &dom, aris::core::Msg &msg_out)->void
+{
+    aris::server::HmswFunctionParam param;
+
+    motorSelector(dom, param);
+
+    for (auto i : dom)
+    {
+        if (i.first == "vel")
+        {
+            param.hmsw_velocity_in_count = std::stoi(i.second);
+        }
+        else if (i.first == "acc")
+        {
+            param.hmsw_accel_in_count = std::stoi(i.second);
+        }
+    }
+
+    msg_out.copyStruct(param);
+}
+
 auto jogParse(const std::string &cmd, const std::map<std::string, std::string> &dom, aris::core::Msg &msg_out)->void
 {
     aris::server::JogFunctionParam param;
