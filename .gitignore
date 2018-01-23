@@ -45,3 +45,5 @@ build
 # IDE files
 *.swp
 .ycm*
+.vscode
+

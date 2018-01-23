@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-
+set( CMAKE_EXPORT_COMPILE_COMMANDS 1)
 # add prefix to every string in a variable
 FUNCTION(PREPEND var prefix)
    SET(listVar "")
@@ -46,7 +46,7 @@ set(CMAKE_BUILD_TYPE "Release")
 
 # set compile options
 if(UNIX)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O2")
 endif(UNIX)
 
 # set definitions to disable some warning
@@ -87,7 +87,7 @@ set(ARIS_INCL_DIR "C:/Aris/include")
 set(ARIS_LINK_DIR "C:/Aris/lib")
 set(ARIS_LINK_LIB aris_server aris_sensor aris_model aris_control aris_core)
 
-set(ALL_INCL_DIR  ${ARIS_INCL_DIR} ${XSENS_INCL_DIR} ${ETHERLAB_INCL_DIR} ${XENOMAI_INCL_DIR} ${GENERAL_INCL_DIR})
+set(ALL_INCL_DIR  ${ARIS_INCL_DIR} ${XSENS_INCL_DIR} ${ETHERLAB_INCL_DIR} ${XENOMAI_INCL_DIR} ${GENERAL_INCL_DIR} ${PROJ_INCL_DIR})
 set(ALL_LINK_DIR  ${ARIS_LINK_DIR} ${XSENS_LINK_DIR} )
 set(ALL_LINK_LIB  ${ARIS_LINK_LIB} ${XSENS_LINK_LIB} ${SYSTEM_LINK_LIB})
 endif(WIN32)
@@ -96,13 +96,15 @@ include_directories(${ALL_INCL_DIR})
 link_directories(${ALL_LINK_DIR})
 
 ################################### build server ####################################
-set(SOURCE_FILES main.cpp )
+set(SOURCE_FILES main.cpp GaitPlanner/RecoverPlanner.cpp)
 PREPEND(FULL_SRC Server ${SOURCE_FILES})
 add_executable(Server ${FULL_SRC})
 target_link_libraries(Server ${ALL_LINK_LIB})
 
 ################################### build client ####################################
-add_executable(rbt Client/client.cpp)
+set(SOURCE_FILES client.cpp)
+PREPEND(FULL_SRC Client ${SOURCE_FILES})
+add_executable(rbt ${FULL_SRC})
 target_link_libraries(rbt ${NRT_LINK_LIB})
 
 ################################### install ####################################
