@@ -12,8 +12,8 @@ namespace robot_app
         static const int WAIST_INDEX = 12;
 
         // Geometric parameters
-        static const double L_AB = 190;
-        static const double L_BE = 191.5;
+        static const double L_AB = 0.190;
+        static const double L_BE = 0.1915;
         static const double THETA0[2] = {-35.8155900*PI/180.0, 35.4890058*PI/180.0};
     }
 }

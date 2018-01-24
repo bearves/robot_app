@@ -96,7 +96,7 @@ include_directories(${ALL_INCL_DIR})
 link_directories(${ALL_LINK_DIR})
 
 ################################### build server ####################################
-set(SOURCE_FILES main.cpp GaitPlanner/RecoverPlanner.cpp)
+set(SOURCE_FILES main.cpp GaitPlanner/RecoverPlanner.cpp GaitPlanner/MotorSelector.cpp GaitPlanner/Kinematics/LegKinematics.cpp)
 PREPEND(FULL_SRC Server ${SOURCE_FILES})
 add_executable(Server ${FULL_SRC})
 target_link_libraries(Server ${ALL_LINK_LIB})

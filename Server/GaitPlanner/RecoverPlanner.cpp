@@ -9,8 +9,8 @@ namespace robot_app
     double RecoverPlanner::recover_position_[MOTION_NUM];
     double RecoverPlanner::current_position_[MOTION_NUM];
 
-    double RecoverPlanner::retract_tip_position_[kinematics::LEG_DOF] = {0, -0.1};
-    double RecoverPlanner::recover_tip_position_[kinematics::LEG_DOF] = {0, 0};
+    double RecoverPlanner::retract_tip_position_[kinematics::LEG_DOF] = {0, -0.26};
+    double RecoverPlanner::recover_tip_position_[kinematics::LEG_DOF] = {0, -0.31};
     double RecoverPlanner::recover_waist_position_ = 0;
 
     void RecoverPlanner::setMotionSelector(const aris::server::MotionSelector &selector)
@@ -74,7 +74,7 @@ namespace robot_app
                 else if (rc_param.count < total_count)
                 {
                     time_ratio = (rc_param.count - stage_retract_count - stage_wait_count) * 1.0 / stage_extend_count;
-                    pivot = (1 - std::cos(M_PI * time_ratio)) / 2.0;
+                    pivot = (1 - std::cos(kinematics::PI * time_ratio)) / 2.0;
                     current_position_[i] = (1 - pivot) * retract_position_[i] + pivot * recover_position_[i];
                 }
                 else
@@ -113,3 +113,22 @@ namespace robot_app
         return true;
     }
 }
+
+// XML configuration
+/*
+            <rc default="rc_param">
+              <rc_param type="group" >
+                <motor_select type="unique" default="all">
+                  <all abbreviation="a"/>
+                  <first abbreviation="f"/>
+                  <second abbreviation="s"/>
+                  <motor abbreviation="m" type="intArray" default="0"/>
+                  <physical_motor abbreviation="p" type="intArray" default="0"/>
+                  <leg abbreviation="l" type="intArray" default="0"/>
+                </motor_select>
+                <t_retract abbreviation="t" type="int" default="3"/>
+                <t_extend abbreviation="r" type="int" default="3"/>
+                <t_wait abbreviation="w" type="int" default="1"/>
+              </rc_param>
+            </rc>
+*/
