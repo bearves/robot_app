@@ -9,7 +9,7 @@
 
 #include "rtdk.h"
 #include "unistd.h"
-#include "GaitPlanner/ParseFunc.h"
+#include "GaitPlanner/MotorSelector.h"
 #include "GaitPlanner/RecoverPlanner.h"
 
 
