@@ -1,6 +1,4 @@
 #include "RecoverPlanner.h"
-// for using constant PI and Cosine
-#define _USE_MATH_DEFINES
 #include <cmath>
 
 namespace robot_app
@@ -66,7 +64,7 @@ namespace robot_app
                 if (rc_param.count < stage_retract_count)
                 {
                     time_ratio = rc_param.count * 1.0 / stage_retract_count;
-                    pivot = (1 - std::cos(M_PI * time_ratio)) / 2.0;
+                    pivot = (1 - std::cos(kinematics::PI * time_ratio)) / 2.0;
                     current_position_[i] = (1 - pivot) * begin_position_[i] + pivot * retract_position_[i];
                 }
                 else if (rc_param.count < stage_retract_count + stage_wait_count)
