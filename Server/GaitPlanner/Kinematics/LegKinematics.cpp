@@ -23,8 +23,8 @@ namespace robot_app
             double theta0 = joint_angle_in[0] + THETA0[0] - PI/2.0;
             double theta1 = joint_angle_in[1] + THETA0[1] - PI/2.0;
 
-            tip_pos_out[0] = leg_orient * (L_AB * cos(theta0) + L_BE * cos(theta0));
-            tip_pos_out[1] = L_AB * sin(theta0) + L_BE * sin(theta0);
+            tip_pos_out[0] = leg_orient * (L_AB * cos(theta0) + L_BE * cos(theta1));
+            tip_pos_out[1] = L_AB * sin(theta0) + L_BE * sin(theta1);
         }
     }
 }

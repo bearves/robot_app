@@ -6,10 +6,11 @@ namespace robot_app
     namespace kinematics
     {
         static const double PI = 3.1415926535898;
-        static const int LEG_NUM    = 6;
-        static const int MOTION_NUM = 13;
-        static const int LEG_DOF    = 2;
-        static const int WAIST_INDEX = 12;
+        static const int LEG_NUM        = 6;
+        static const int ACTIVE_LEG_NUM = 1;
+        static const int MOTION_NUM     = 13;
+        static const int LEG_DOF        = 2;
+        static const int WAIST_INDEX    = 12;
         static const int LEG_GROUP_A[3] = {0, 2, 4}; // MF, LB, RB
         static const int LEG_GROUP_B[3] = {1, 3, 5}; // LF, MB, RF
 

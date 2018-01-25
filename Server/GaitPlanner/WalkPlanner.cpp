@@ -53,11 +53,18 @@ namespace robot_app
             std::fill(begin_body_pos_, begin_body_pos_+3, 0);
 
             // set leg's begin pos
-            for (int i = 0; i < kinematics::LEG_NUM; i++)
+            for (int i = 0; i < kinematics::ACTIVE_LEG_NUM; i++)
             {
-                begin_foot_pos_[i*3]   = 0;
-                begin_foot_pos_[i*3+1] = -kinematics::STANDING_HEIGHT;
+                kinematics::Leg::LegFK(
+                    &(begin_joint_position_[i*2]), 
+                    &(begin_foot_pos_[i*3]), 
+                    kinematics::LEG_ORIENTATION[i]);
                 begin_foot_pos_[i*3+2] = 0;
+
+                rt_printf("Leg %d's begin position is (%.3f, %.3f)\n", 
+                    i,
+                    begin_foot_pos_[i*3], 
+                    begin_foot_pos_[i*3+1]);
             }
             std::copy(begin_foot_pos_, begin_foot_pos_+18, foot_pos_);
             std::copy(begin_body_pos_, begin_body_pos_+3,  body_pos_);
@@ -141,7 +148,7 @@ namespace robot_app
         }
 
         // Leg joint cmd
-        for (int i = 0; i < kinematics::LEG_NUM; i++)
+        for (int i = 0; i < kinematics::ACTIVE_LEG_NUM; i++)
         {
             // Calculate foot position related to the hip coordinate
             foot_cmd_pos_[i*2] = foot_pos_[i*3] - body_pos_[0];
