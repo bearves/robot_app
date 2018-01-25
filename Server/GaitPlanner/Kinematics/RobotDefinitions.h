@@ -17,7 +17,7 @@ namespace robot_app
         // Geometric parameters for leg
         static const double L_AB = 0.190;
         static const double L_BE = 0.1915;
-        static const double THETA0[2] = {-35.8155900*PI/180.0, 35.4890058*PI/180.0};
+        static const double THETA0[2] = {-119.48*PI/180.0-0.019, 0.357};
 
         // Geometric parameters for body
 

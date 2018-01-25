@@ -228,4 +228,25 @@ namespace robot_app
         coe[2] = (1/dt/dt/dt) * (-t2*t2*t2 * v1 + t1*t1*t1 * v2 + t1*t1 * t2 * (2 * v1 + v2) -   t1 * t2 * (t2 * v1 + 2 * t2 * v2 + 6 * x1 - 6 * x2));
         coe[3] = (1/dt/dt/dt) * (t2 * (t1 * (-t1 + t2) * (t2 * v1 + t1 * v2) - t2 * (-3 * t1 + t2) * x1) + t1*t1 * (t1 - 3 * t2) * x2);
     }
+
+    /* XML configuration
+
+            <wk default="wk_param">
+              <wk_param type="group" >
+                <motor_select type="unique" default="all">
+                  <all abbreviation="a"/>
+                  <first abbreviation="f"/>
+                  <second abbreviation="s"/>
+                  <motor abbreviation="m" type="intArray" default="0"/>
+                  <physical_motor abbreviation="p" type="intArray" default="0"/>
+                  <leg abbreviation="l" type="intArray" default="0"/>
+                </motor_select>
+                <step_length  abbreviation="d" type="double" default="0.15"/>
+                <step_height  abbreviation="h" type="double" default="0.05"/>
+                <step_number  abbreviation="n" type="int"    default="1"/>
+                <turning_rate abbreviation="b" type="double" default="0.0"/>
+                <period       abbreviation="t" type="double" default="2"/>
+              </wk_param>
+            </wk>
+    */
 }
