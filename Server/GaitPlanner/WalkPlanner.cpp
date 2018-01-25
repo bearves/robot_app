@@ -135,16 +135,16 @@ namespace robot_app
         for (int i = 0; i < 3; i++)
         {
             int leg_id = swing_leg_group[i];
-            foot_pos_[leg_id*3+0]=begin_foot_pos_[leg_id*3+0] + current_step_len*(1-std::cos(s))/2.0;
-            foot_pos_[leg_id*3+1]=begin_foot_pos_[leg_id*3+1] + wk_param.step_height * std::sin(s);  
-            foot_pos_[leg_id*3+2]=begin_foot_pos_[leg_id*3+2];  
+            foot_pos_[leg_id*3+0] = begin_foot_pos_[leg_id*3+0] + current_step_len*(1-std::cos(s))/2.0;
+            foot_pos_[leg_id*3+1] = begin_foot_pos_[leg_id*3+1] + wk_param.step_height * std::sin(s);  
+            foot_pos_[leg_id*3+2] = begin_foot_pos_[leg_id*3+2];  
         }
         for (int i = 0; i < 3; i++)
         {
             int leg_id = stance_leg_group[i];
-            foot_pos_[leg_id*3+0]=begin_foot_pos_[leg_id*3+0]; 
-            foot_pos_[leg_id*3+1]=begin_foot_pos_[leg_id*3+1]; 
-            foot_pos_[leg_id*3+2]=begin_foot_pos_[leg_id*3+2]; 
+            foot_pos_[leg_id*3+0] = begin_foot_pos_[leg_id*3+0]; 
+            foot_pos_[leg_id*3+1] = begin_foot_pos_[leg_id*3+1]; 
+            foot_pos_[leg_id*3+2] = begin_foot_pos_[leg_id*3+2]; 
         }
 
         // Leg joint cmd
@@ -185,7 +185,10 @@ namespace robot_app
     bool WalkPlanner::walkParser(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)
     {
         WalkParam param;
-        motion_selector_(params, param);
+
+        if (motion_selector_)
+            motion_selector_(params, param);
+
         for (auto i : params)
         {
             if (i.first == "step_length")

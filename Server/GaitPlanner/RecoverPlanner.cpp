@@ -93,7 +93,10 @@ namespace robot_app
     bool RecoverPlanner::recoverParser(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)
     {
         RecoverParam param;
-        motion_selector_(params, param);
+
+        if (motion_selector_)
+            motion_selector_(params, param);
+
         for (auto i : params)
         {
             if (i.first == "t_retract")
