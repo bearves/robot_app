@@ -11,6 +11,7 @@
 #include "unistd.h"
 #include "GaitPlanner/MotorSelector.h"
 #include "GaitPlanner/RecoverPlanner.h"
+#include "GaitPlanner/WalkPlanner.h"
 
 
 int main(int argc, char *argv[])
@@ -33,6 +34,7 @@ int main(int argc, char *argv[])
 	}
 
     robot_app::RecoverPlanner::setMotionSelector(robot_app::motorSelector);
+    robot_app::WalkPlanner::setMotionSelector(robot_app::motorSelector);
 
 	auto &rs = aris::server::ControlServer::instance();
 	
@@ -40,6 +42,7 @@ int main(int argc, char *argv[])
 	rs.loadXml(xml_address.c_str());
 	rs.setMotionSelector(robot_app::motorSelector);
 	rs.addCmd("rc", robot_app::RecoverPlanner::recoverParser, robot_app::RecoverPlanner::recover);
+	rs.addCmd("wk", robot_app::WalkPlanner::walkParser, robot_app::WalkPlanner::walk);
 
 	rs.open();
 

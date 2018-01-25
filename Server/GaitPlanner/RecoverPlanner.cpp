@@ -9,8 +9,8 @@ namespace robot_app
     double RecoverPlanner::recover_position_[MOTION_NUM];
     double RecoverPlanner::current_position_[MOTION_NUM];
 
-    double RecoverPlanner::retract_tip_position_[kinematics::LEG_DOF] = {0, -0.26};
-    double RecoverPlanner::recover_tip_position_[kinematics::LEG_DOF] = {0, -0.31};
+    double RecoverPlanner::retract_tip_position_[kinematics::LEG_DOF] = {0, -kinematics::RETRACT_HEIGHT};
+    double RecoverPlanner::recover_tip_position_[kinematics::LEG_DOF] = {0, -kinematics::STANDING_HEIGHT};
     double RecoverPlanner::recover_waist_position_ = 0;
 
     void RecoverPlanner::setMotionSelector(const aris::server::MotionSelector &selector)
@@ -36,8 +36,8 @@ namespace robot_app
             // assign positions for leg axes
             for (int i = 0; i < kinematics::LEG_NUM; i++)
             {
-                kinematics::Leg::LegIK(retract_tip_position_, &retract_position_[i*2]);
-                kinematics::Leg::LegIK(recover_tip_position_, &recover_position_[i*2]);
+                kinematics::Leg::LegIK(retract_tip_position_, &retract_position_[i*2], kinematics::LEG_ORIENTATION[i]);
+                kinematics::Leg::LegIK(recover_tip_position_, &recover_position_[i*2], kinematics::LEG_ORIENTATION[i]);
             }
             // assign positions for waist axis
             retract_position_[kinematics::WAIST_INDEX] = begin_position_[kinematics::WAIST_INDEX];

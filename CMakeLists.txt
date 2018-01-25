@@ -96,7 +96,7 @@ include_directories(${ALL_INCL_DIR})
 link_directories(${ALL_LINK_DIR})
 
 ################################### build server ####################################
-set(SOURCE_FILES main.cpp GaitPlanner/RecoverPlanner.cpp GaitPlanner/MotorSelector.cpp GaitPlanner/Kinematics/LegKinematics.cpp)
+set(SOURCE_FILES main.cpp GaitPlanner/RecoverPlanner.cpp GaitPlanner/WalkPlanner.cpp GaitPlanner/MotorSelector.cpp GaitPlanner/Kinematics/LegKinematics.cpp)
 PREPEND(FULL_SRC Server ${SOURCE_FILES})
 add_executable(Server ${FULL_SRC})
 target_link_libraries(Server ${ALL_LINK_LIB})
@@ -106,6 +106,12 @@ set(SOURCE_FILES client.cpp)
 PREPEND(FULL_SRC Client ${SOURCE_FILES})
 add_executable(rbt ${FULL_SRC})
 target_link_libraries(rbt ${NRT_LINK_LIB})
+
+################################### build tests ####################################
+set(SOURCE_FILES GaitPlanner/walk2.cpp)
+PREPEND(FULL_SRC Server ${SOURCE_FILES})
+add_executable(walk2 ${FULL_SRC})
+target_link_libraries(walk2 ${NRT_LINK_LIB})
 
 ################################### install ####################################
 if(UNIX)
