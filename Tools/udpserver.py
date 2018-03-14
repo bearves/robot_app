@@ -39,6 +39,7 @@ def main():
                 dataToSend = getCurrentLogData()
 
                 msgToSend = 'BEG ' + dataToSend + ' END'
+                print msgToSend
                 sock.sendto(msgToSend, remoteAddr)
                 print('DataLength:', len(msgToSend))
 

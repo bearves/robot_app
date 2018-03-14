@@ -101,15 +101,15 @@ namespace robot_app
         {
             if (i.first == "t_retract")
             {
-                param.t_retract = std::stoi(i.second);
+                param.t_retract = std::stod(i.second);
             }
             else if (i.first == "t_extend")
             {
-                param.t_extend = std::stoi(i.second);
+                param.t_extend = std::stod(i.second);
             }
             else if (i.first == "t_wait")
             {
-                param.t_wait = std::stoi(i.second);
+                param.t_wait = std::stod(i.second);
             }
         }
         msg_out.copyStruct(param);

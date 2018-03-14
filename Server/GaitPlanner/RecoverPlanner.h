@@ -11,9 +11,9 @@ namespace robot_app
     struct RecoverParam final : aris::server::GaitParamBase
     {
     public:
-        int t_retract;
-        int t_extend;
-        int t_wait;
+        double t_retract;
+        double t_extend;
+        double t_wait;
     };
 
     class RecoverPlanner

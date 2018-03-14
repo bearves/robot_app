@@ -5,7 +5,7 @@ namespace robot_app
 {
     namespace kinematics
     {
-        static const double PI = 3.1415926535898;
+        static const double PI = 3.141592653589793;
         static const int LEG_NUM        = 6;
         static const int ACTIVE_LEG_NUM = 1;
         static const int MOTION_NUM     = 13;
@@ -15,9 +15,9 @@ namespace robot_app
         static const int LEG_GROUP_B[3] = {1, 3, 5}; // LF, MB, RF
 
         // Geometric parameters for leg
-        static const double L_AB = 0.190;
-        static const double L_BE = 0.1915;
-        static const double THETA0[2] = {-119.48*PI/180.0-0.019, 0.357};
+        static const double L_AB = 0.350;
+        static const double L_BE = 0.350;
+        static const double THETA0[2] = {-34.0477*PI/180.0, 34.0477*PI/180.0};
 
         // Geometric parameters for body
 
@@ -37,8 +37,8 @@ namespace robot_app
         static const double LEG_ORIENTATION[LEG_NUM] = {-1, -1, 1, 1, 1, -1};
 
         // Height at RC position
-        static const double STANDING_HEIGHT = 0.31;
-        static const double RETRACT_HEIGHT = 0.26;
+        static const double STANDING_HEIGHT = 0.58;
+        static const double RETRACT_HEIGHT = 0.35*1.4;
     }
 }
 
