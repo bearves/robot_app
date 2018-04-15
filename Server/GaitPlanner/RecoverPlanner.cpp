@@ -39,6 +39,8 @@ namespace robot_app
                 kinematics::Leg::LegIK(retract_tip_position_, &retract_position_[i*2], kinematics::LEG_ORIENTATION[i]);
                 kinematics::Leg::LegIK(recover_tip_position_, &recover_position_[i*2], kinematics::LEG_ORIENTATION[i]);
             }
+            rt_printf("Retract joint pos: %.3f, %.3f\n", retract_position_[0], retract_position_[1]);
+            rt_printf("Recover joint pos: %.3f, %.3f\n", recover_position_[0], recover_position_[1]);
             // assign positions for waist axis
             retract_position_[kinematics::WAIST_INDEX] = begin_position_[kinematics::WAIST_INDEX];
             recover_position_[kinematics::WAIST_INDEX] = recover_waist_position_;
@@ -131,7 +133,7 @@ namespace robot_app
                 </motor_select>
                 <t_retract abbreviation="t" type="int" default="3"/>
                 <t_extend abbreviation="r" type="int" default="3"/>
-                <t_wait abbreviation="w" type="int" default="1"/>
+                <t_wait abbreviation="x" type="int" default="1"/>
               </rc_param>
             </rc>
 */

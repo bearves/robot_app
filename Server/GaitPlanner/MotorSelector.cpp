@@ -13,6 +13,29 @@ void motorSelector(const std::map<std::string, std::string> &dom, aris::server::
         {
             std::fill_n(param.active_motor, MOTION_NUM, true);
         }
+        else if (i.first == "waist")
+        {
+            std::fill_n(param.active_motor, MOTION_NUM, false);
+	    param.active_motor[WAIST_INDEX] = true;
+        }
+        else if (i.first == "legC")
+        {
+            std::fill_n(param.active_motor, MOTION_NUM, false);
+            for (int j = 0; j < LEG_NUM; j+=2)
+            {
+                param.active_motor[j*LEG_DOF] = true;
+                param.active_motor[j*LEG_DOF+1] = true;
+            }
+        }
+        else if (i.first == "legB")
+        {
+            std::fill_n(param.active_motor, MOTION_NUM, false);
+            for (int j = 1; j < LEG_NUM; j+=2)
+            {
+                param.active_motor[j*LEG_DOF] = true;
+                param.active_motor[j*LEG_DOF+1] = true;
+            }
+        }
         else if (i.first == "first")
         {
             std::fill_n(param.active_motor, MOTION_NUM, false);
