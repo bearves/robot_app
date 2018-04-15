@@ -25,12 +25,12 @@ namespace robot_app
         // Y axis : UP    direction
         // Z axis : RIGHT direction
         static const  double HIP_POSITION[3*LEG_NUM]=
-            {  0.23688,  0.0, -0.23688,
-               0.480  ,  0.0,        0,
-               0.23688,  0.0,  0.23688,
-              -0.23688,  0.0,  0.23688,
-              -0.480  ,  0.0,        0,
-              -0.23688,  0.0, -0.23688};
+            {  0.2525,   0.0, -0.25902,
+               0.445  ,  0.0,        0,
+               0.2525,   0.0,  0.25902,
+              -0.2525,   0.0,  0.25902,
+              -0.445  ,  0.0,        0,
+              -0.2525,   0.0, -0.25902};        
         // orientations of each leg corresponding to the body frame
         // -1 means the leg's X and Z axis are opposite with the body's
         //  1 means the leg's X and Z axis are along with the body's
@@ -39,6 +39,9 @@ namespace robot_app
         // Height at RC position
         static const double STANDING_HEIGHT = 0.45;
         static const double RETRACT_HEIGHT = 0.30*1.28;
+        //stairclimb parament
+        static const int TOTAL_CLIMB_NUMBER=23;
+        static const int TOTAL_HILL_CLIMB_NUMBER=21;
     }
 }
 

@@ -12,6 +12,8 @@
 #include "GaitPlanner/MotorSelector.h"
 #include "GaitPlanner/RecoverPlanner.h"
 #include "GaitPlanner/WalkPlanner.h"
+#include "GaitPlanner/StairClimbPlanner.h"
+#include "GaitPlanner/HillClimbPlanner.h"
 
 
 int main(int argc, char *argv[])
@@ -35,6 +37,8 @@ int main(int argc, char *argv[])
 
     robot_app::RecoverPlanner::setMotionSelector(robot_app::motorSelector);
     robot_app::WalkPlanner::setMotionSelector(robot_app::motorSelector);
+    robot_app::StairClimbPlanner::setMotionSelector(robot_app::motorSelector);
+    robot_app::HillClimbPlanner::setMotionSelector(robot_app::motorSelector);
 
 	auto &rs = aris::server::ControlServer::instance();
 	
@@ -43,7 +47,8 @@ int main(int argc, char *argv[])
 	rs.setMotionSelector(robot_app::motorSelector);
 	rs.addCmd("rc", robot_app::RecoverPlanner::recoverParser, robot_app::RecoverPlanner::recover);
 	rs.addCmd("wk", robot_app::WalkPlanner::walkParser, robot_app::WalkPlanner::walk);
-
+        rs.addCmd("sc",robot_app::StairClimbPlanner::stairclimbParser,robot_app::StairClimbPlanner::stairclimb);
+        rs.addCmd("hc",robot_app::HillClimbPlanner::hillclimbParser,robot_app::HillClimbPlanner::hillclimb);
 	rs.open();
 
 	rs.setOnExit([&]() 
