@@ -145,9 +145,23 @@
                 <period       abbreviation="t" type="double" default="2"/>
               </hc_param>
             </hc>
+            <fwk default="fwk_param">
+              <fwk_param type="group" >
+                <motor_select type="unique" default="all">
+                  <all abbreviation="a"/>
+                  <first abbreviation="f"/>
+                  <second abbreviation="s"/>
+                  <motor abbreviation="m" type="intArray" default="0"/>
+                  <physical_motor abbreviation="p" type="intArray" default="0"/>
+                  <leg abbreviation="l" type="intArray" default="0"/>
+                </motor_select>
+                <period abbreviation="t" type="double" default="2"/>
+                <step_number abbreviation="n" type="int" default="2"/>
+              </fwk_param>
+            </fwk>
         </Commands>
     </Server>
-    <Controller control_freq="2000" record_freq="100">
+    <Controller control_freq="1000" record_freq="100">
         <EtherCat>
             <SlaveType>
                 <ElmoSoloWhistle product_code="0x00030924" vender_id="0x0000009a" alias="0" distributed_clock="0x0300">

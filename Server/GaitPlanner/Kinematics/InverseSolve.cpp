@@ -4,23 +4,13 @@ namespace robot_app
     namespace kinematics
     {
         void O13Inverse::InverseSolve(double *tip_pos_in, double *body_pos_in, double *joint_angle_out)
-        //void InverseSolve(double *tip_pos_in, double *body_pos_in,double *body_angle_in, double *joint_angle_out)
         {
-          using namespace std;
-            //test code
-            // for (int i=0;i<6;i++)
-            // {
-            //     cout<<"foot pos on CS="<<tip_pos_in[3*i]<<" "<<tip_pos_in[3*i+1]<<" "<<tip_pos_in[3*i+2]<<endl;
-            // }
-            //     cout<<"body_pos_ pos on CS="<<body_pos_in[0]<<" "<<body_pos_in[1]<<" "<<body_pos_in[2]<<endl;
-            //     cout<<"body_angle_ pos on CS="<<body_pos_in[3]<<" "<<body_pos_in[4]<<" "<<body_pos_in[5]<<endl;
+            using namespace std;
 
-
-
-            //void LegIK(double *tip_pos_in, double *joint_angle_out, double leg_orient);
-            double beta=body_pos_in[3];
-            double theta=body_pos_in[4];
-            double alpha=body_pos_in[5];
+            // Euler angles of the body
+            double beta  = body_pos_in[3];
+            double theta = body_pos_in[4];
+            double alpha = body_pos_in[5];
             //zyx eular angle rotation matrix
             Eigen::Matrix4d Tz_beta;
             Eigen::Matrix4d Ty_theta;
@@ -42,14 +32,15 @@ namespace robot_app
                       0,   cos(alpha), -sin(alpha),  0,
                       0,   sin(alpha), cos(alpha),   0,
                       0,   0,           0,           1;
-            T=Tz_beta*Ty_theta*Tx_alpha;
 
-            T(0,3)=body_pos_in[0];
-            T(1,3)=body_pos_in[1];
-            T(2,3)=body_pos_in[2];
+            T = Tz_beta*Ty_theta*Tx_alpha;
+
+            T(0,3) = body_pos_in[0];
+            T(1,3) = body_pos_in[1];
+            T(2,3) = body_pos_in[2];
             T_inverse.topLeftCorner(3,3)=T.topLeftCorner(3,3).transpose();
             T_inverse.topRightCorner(3,1)=-T.topLeftCorner(3,3).transpose()*T.topRightCorner(3,1);
-            T_inverse.bottomLeftCorner(1,4)<<0, 0,  0,  1;
+            T_inverse.bottomLeftCorner(1,4) << 0, 0,  0,  1;
             //Leg cs on body cs
             Eigen::Matrix4d T_b1_LFR;
             T_b1_LFR<<-1, 0, 0, 0.2520,
@@ -144,31 +135,8 @@ namespace robot_app
             QL_FR=T_LR_b1*T_inverse*Q_FR;
             QL_FRR=T_LRR_b2*T_inverse*Q_FRR;
             QL_FFR=T_LFR_b1*T_inverse*Q_FFR;
-            // std::cout<<"T_B_G ="<<T<<endl;
-            // std::cout<<"T_inverse ="<<T_inverse<<endl;
-            // std::cout<<"T_LF_B2 ="<<T_LF_b2<<endl;
-            // std::cout<<"T_LFL_B1 ="<<T_LFL_b1<<endl;
-            // std::cout<<"T_LRL_B2 ="<<T_LRL_b2<<endl;
-            // std::cout<<"T_LR_B1 ="<<T_LR_b1<<endl;
-            // std::cout<<"T_LRR_B2 ="<<T_LRR_b2<<endl;
-            // std::cout<<"T_LFR_B1 ="<<T_LFR_b1<<endl;
 
-            // std::cout<<"foot FF position ON GCS ="<<Q_FF<<endl;
-            // std::cout<<"foot FF1 position ON LCS="<<QL_FF<<endl;
-            // std::cout<<"foot FF2 position ON LCS="<<QL_FFL<<endl;
-            // std::cout<<"foot FF3 position ON LCS="<<QL_FRL<<endl;
-            // std::cout<<"foot FF4 position ON LCS="<<QL_FR<<endl;
-            // std::cout<<"foot FF5 position ON LCS="<<QL_FRR<<endl;
-            // std::cout<<"foot FF5 position ON LCS="<<QL_FFR<<endl;
-
-            //********moter angle by using legik*******void LegIK(double *tip_pos_in, double *joint_angle_out, double leg_orient);
-            // double TipPos[12]{QL_FF(0),QL_FF(1),
-            //                   QL_FFL(0),QL_FFL(1),
-            //                   QL_FRL(0),QL_FRL(1),
-            //                   QL_FR(0),QL_FR(1),
-            //                   QL_FRR(0),QL_FRR(1),
-            //                   QL_FFR(0),QL_FFR(1)
-            //                   };
+            //********moter angle by using legik*******
             double TipPos[12]{QL_FFL(0),QL_FFL(1),
                               QL_FF(0),QL_FF(1),
                               QL_FFR(0),QL_FFR(1),
@@ -179,16 +147,8 @@ namespace robot_app
 
             for (int i=0;i<6;i++)
             {
-
-               kinematics::Leg::LegIK(
-                   &(TipPos[i*2]),
-                   &(joint_angle_out[i*2]),
-                     1);
+               kinematics::Leg::LegIK(&(TipPos[i*2]), &(joint_angle_out[i*2]), 1);
             }
-
-
-
         }
      }
-
 }

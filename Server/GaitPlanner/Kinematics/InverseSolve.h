@@ -5,7 +5,7 @@
 #include <cmath>
 #include "RobotDefinitions.h"
 #include <Eigen/Dense>
-#include<Eigen/Core>
+#include <Eigen/Core>
 
 namespace robot_app
 {
@@ -15,7 +15,6 @@ namespace robot_app
         {
         public:
             static void InverseSolve(double *tip_pos_in, double *body_pos_in, double *joint_angle_out);
-            //static void LegFK(double *joint_angle_in, double *tip_pos_out, double leg_orient);
         };
     }
 }
