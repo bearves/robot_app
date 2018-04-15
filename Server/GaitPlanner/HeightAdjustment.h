@@ -1,32 +1,31 @@
-#ifndef WALK_PLANNER_H
-#define WALK_PLANNER_H
+#ifndef HEIGHTADJUSTMENT_H
+#define HEIGHTADJUSTMENT_H
 
 #include <aris.h>
 #include "Kinematics/RobotDefinitions.h"
 #include "Kinematics/LegKinematics.h"
+#include "Kinematics/InverseSolve.h"
+#include "Kinematics/InverseSolveLeg.h"
 
 namespace robot_app
 {
-    // for recovery
-    struct WalkParam final : aris::server::GaitParamBase
+    // for height adjustment
+    struct HeightParam final : aris::server::GaitParamBase
     {
     public:
-        double step_length;
-        double step_height;
-        int step_number;
-        double turning_rate;
+        double height_adjustment;
         double period;
     };
 
-    class WalkPlanner
+    class HeightAdjustment
     {
     public:
         static void setMotionSelector(const aris::server::MotionSelector &selector);
-        static int  walk(aris::model::Model &model, aris::server::PlanParamBase &param);
-        static bool walkParser(const std::string &cmd, 
-                               const std::map<std::string, std::string> &params, 
+        static int  height(aris::model::Model &model, aris::server::PlanParamBase &param);
+        static bool heightParser(const std::string &cmd,
+                               const std::map<std::string, std::string> &params,
                                aris::core::Msg &msg_out);
-    
+
     private:
         static aris::server::MotionSelector motion_selector_;
 
@@ -38,12 +37,15 @@ namespace robot_app
         static double foot_cmd_pos_[kinematics::MOTION_NUM];
         static double joint_cmd_pos_[kinematics::MOTION_NUM];
         static double begin_joint_position_[kinematics::MOTION_NUM];
-
-        static double cubic_coefs1_[4], cubic_coefs2_[4];
         static double pos2count_ratio_[kinematics::MOTION_NUM];
-        static void calculate_coe(double* t, double* x, double* v, double* coe);
-        static double turn_angle_every_step; 
+
+
+        static double actual_height; //yk
+        static double tip_[18];
+        static double body[6];//body x\y\z\thetaz\thetay\thetax
+
     };
 }
 
-#endif
+
+#endif // HEIGHTADJUSTMENT_H

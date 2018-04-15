@@ -14,6 +14,7 @@ namespace robot_app
     double WalkPlanner::pos2count_ratio_[kinematics::MOTION_NUM];
     double WalkPlanner::cubic_coefs1_[4];
     double WalkPlanner::cubic_coefs2_[4];
+    double WalkPlanner::turn_angle_every_step;    
 
     void WalkPlanner::setMotionSelector(const aris::server::MotionSelector &selector)
     {
@@ -75,6 +76,7 @@ namespace robot_app
         // You need to calculate joint_cmd_pos_ in this part             //
         ///////////////////////////////////////////////////////////////////
         
+        turn_angle_every_step=-wk_param.turning_rate*PI*1.0/(180.0*wk_param.step_number);
         int period_count = wk_param.count % total_count_;
         double s = -PI / 2 * std::cos( PI * (period_count + 1) *1.0 / total_count_) + PI / 2;
         
@@ -161,7 +163,45 @@ namespace robot_app
                 kinematics::LEG_ORIENTATION[i]);
         }
         // Waist joint cmd
-        joint_cmd_pos_[kinematics::WAIST_INDEX] = begin_joint_position_[kinematics::WAIST_INDEX];
+        double begin_waist_pos = begin_joint_position_[kinematics::WAIST_INDEX];
+
+        if (std::abs(turn_angle_every_step) > 15.0 * PI / 180.0)
+        {
+            joint_cmd_pos_[kinematics::WAIST_INDEX] = begin_waist_pos;
+        }
+        else 
+        {
+            if (wk_param.count/total_count_ % 2 == 0) //swing group_A
+            {
+                if (period_count < 0.1*total_count_)
+                {
+                    joint_cmd_pos_[kinematics::WAIST_INDEX] = begin_waist_pos;
+                }
+                else if (period_count >=0.1*total_count_ && period_count <0.9*total_count_)
+                {
+                    joint_cmd_pos_[kinematics::WAIST_INDEX] = begin_waist_pos + 0.5*turn_angle_every_step-0.5*turn_angle_every_step*std::cos( PI * (period_count -0.1*total_count_+ 1) *1.0 / (0.8*total_count_));
+                }
+                else
+                {
+                    joint_cmd_pos_[kinematics::WAIST_INDEX] = begin_waist_pos + turn_angle_every_step;
+                }
+            }
+            else //swing group_B
+            {
+                if (period_count < 0.1*total_count_)
+                {
+                    joint_cmd_pos_[kinematics::WAIST_INDEX] = begin_waist_pos + turn_angle_every_step;
+                }
+                else if (period_count >=0.1*total_count_ && period_count <0.9*total_count_)
+                {
+                    joint_cmd_pos_[kinematics::WAIST_INDEX] = begin_waist_pos + 0.5*turn_angle_every_step-0.5*(-turn_angle_every_step)*std::cos( PI * (period_count -0.1*total_count_+ 1) *1.0 / (0.8*total_count_));
+                }
+                else
+                {
+                    joint_cmd_pos_[kinematics::WAIST_INDEX] = begin_waist_pos;
+                }
+            }
+        }
 
         ///////////////////////////////////////////////////////
         // User Planning code ends here                      //
@@ -185,6 +225,8 @@ namespace robot_app
     bool WalkPlanner::walkParser(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)
     {
         WalkParam param;
+        param.step_number = 1;
+        param.turning_rate = 0;
 
         if (motion_selector_)
             motion_selector_(params, param);
@@ -202,10 +244,16 @@ namespace robot_app
             else if (i.first == "step_number")
             {
                 param.step_number = std::stoi(i.second);
+                if (param.step_number == 0)
+                {
+                    std::cout << "step_number should be a positive int." << std::endl;
+                    return true;
+                }
             }
             else if (i.first == "turning_rate")
             {
                 param.turning_rate = std::stod(i.second);
+                
             }
             else if (i.first == "period")
             {

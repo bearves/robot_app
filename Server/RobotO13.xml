@@ -159,6 +159,38 @@
                 <step_number abbreviation="n" type="int" default="2"/>
               </fwk_param>
             </fwk>
+	　  <hello default="hello_param">
+	      <hello_param type="group">
+                <motor_select type="unique" default="all">
+                  <all abbreviation="a"/>
+                  <first abbreviation="f"/>
+                  <second abbreviation="s"/>
+                  <motor abbreviation="m" type="intArray" default="0"/>
+                  <physical_motor abbreviation="p" type="intArray" default="0"/>
+                  <leg abbreviation="l" type="intArray" default="0"/>
+                </motor_select>
+                <alpha1       abbreviation="c" type="double" default="0.261799387799"/>
+                <height_hello abbreviation="h" type="double" default="0.45"/>
+                <beta1        abbreviation="b" type="double" default="0.174532925199"/>
+                <period       abbreviation="t" type="double" default="5.0"/>
+                <x2           abbreviation="x" type="double" default="-0.24"/>
+                <y2           abbreviation="y" type="double" default="-0.4"/>
+              </hello_param>	
+	    </hello>
+            <height default="height_param">
+              <height_param type="group" >
+                <motor_select type="unique" default="all">
+                  <all abbreviation="a"/>
+                  <first abbreviation="f"/>
+                  <second abbreviation="s"/>
+                  <motor abbreviation="m" type="intArray" default="0"/>
+                  <physical_motor abbreviation="p" type="intArray" default="0"/>
+                  <leg abbreviation="l" type="intArray" default="0"/>
+                </motor_select>
+                <height_adjustment  abbreviation="h" type="double" default="0.4"/>
+                <period       abbreviation="t" type="double" default="1"/>
+              </height_param>
+            </height>
         </Commands>
     </Server>
     <Controller control_freq="1000" record_freq="100">
