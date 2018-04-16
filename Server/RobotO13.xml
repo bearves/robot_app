@@ -222,7 +222,7 @@
                         </index_1a1c>
                     </PDO>
                     <SDO>
-                        <homeMode index="0x6098" subindex="0" type="int8" config="17"/>
+                        <homeMode index="0x6098" subindex="0" type="int8" config="35"/>
                         <homeAcc index="0x609A" subindex="0" type="uint32" config="40000"/>
                         <homeHighSpeed index="0x6099" subindex="1" type="uint32" config="8000"/>
                         <homeLowSpeed index="0x6099" subindex="2" type="uint32" config="4000"/>
