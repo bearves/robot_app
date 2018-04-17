@@ -31,7 +31,8 @@ namespace robot_app
     double FastWalk::cubic_coefs1_[4];
     double FastWalk::cubic_coefs2_[4];
 
-    double FastWalk::Pee[6000][2];
+    double FastWalk::swingPee_scaling[2000][2];
+    const double FastWalk::initTipPos[2] {0,-0.45};
 
     void FastWalk::setMotionSelector(const aris::server::MotionSelector &selector)
     {
@@ -43,7 +44,7 @@ namespace robot_app
         using aris::control::EthercatMotion;
         using kinematics::PI;
 
-        auto& fw_param = static_cast<FastWalkParam &>(param);
+        auto& fw_param = static_cast<WalkParam &>(param);
         static aris::server::ControlServer &cs = aris::server::ControlServer::instance();
 
         /////////////////////////////////////////////////////////////
@@ -60,6 +61,12 @@ namespace robot_app
 
             // calculate cubic coefficients for body trj interpolation
             total_count_ = (int)(fw_param.period * cs.getControlFreq());
+            double t[2]={0, fw_param.period};
+            double x[2]={0, fw_param.step_length / 4};
+            double v1[2]={0, 0.5 * fw_param.step_length / fw_param.period};
+            double v2[2]={v1[1], 0};
+            calculate_coe(t, x, v1, cubic_coefs1_);
+            calculate_coe(t, x, v2, cubic_coefs2_);
 
             // set body's begin pos
             std::fill(begin_body_pos_, begin_body_pos_+3, 0);
@@ -88,76 +95,106 @@ namespace robot_app
         ///////////////////////////////////////////////////////////////////
 
         int period_count = fw_param.count % total_count_;
+        double const_v = 0.5 * fw_param.step_length / fw_param.period;
+        double instant_v {0};
+        double t_r = (period_count + 1) * 1.0 / cs.getControlFreq();
+        double t_r2 = t_r * t_r;
+        double t_r3 = t_r2 * t_r;
 
         // trajectory planning
         if (fw_param.count / total_count_ == 0)
         {
             // the first step
-            for (int i = 0; i < 3; i++)//swing
+            //swing
+            instant_v = const_v / fw_param.period * period_count / cs.getControlFreq();
+            for (int i = 0; i < 3; i++)
             {
-                int leg_id=kinematics::LEG_GROUP_A[i];
-                foot_cmd_pos_[2*leg_id] = Pee[period_count][0];
-                foot_cmd_pos_[2*leg_id+1] = Pee[period_count][1];
+                int legID = kinematics::LEG_GROUP_A[i];
+                foot_cmd_pos_[2*legID]=initTipPos[0] + (swingPee_scaling[period_count][0]-initTipPos[0]) * instant_v / const_v;
+                foot_cmd_pos_[2*legID+1]=swingPee_scaling[period_count][1];
             }
-            for (int i = 0; i < 3; i++)//stance
+
+            //stance
+            body_pos_[0] = begin_body_pos_[0] + cubic_coefs1_[0] * t_r3 + cubic_coefs1_[1] * t_r2 +
+                                   cubic_coefs1_[2] * t_r + cubic_coefs1_[3];
+            for (int i = 0; i < 3; i++)
             {
-                int leg_id=kinematics::LEG_GROUP_B[i];
-                foot_cmd_pos_[2*leg_id] = -Pee[(4*total_count_-1) - period_count][0];
-                foot_cmd_pos_[2*leg_id+1] = Pee[(4*total_count_-1) - period_count][1];
+                int legID = kinematics::LEG_GROUP_B[i];
+                foot_cmd_pos_[2*legID]=begin_foot_pos_[3*legID] - body_pos_[0];
+                foot_cmd_pos_[2*legID+1]=begin_foot_pos_[3*legID+1];
             }
         }
         else if (fw_param.count/total_count_ == 2 * fw_param.step_number - 1)
         {
             //the last step
-            for (int i = 0; i < 3; i++)//stance
+            //swing
+            instant_v = const_v - const_v / fw_param.period * period_count / cs.getControlFreq();
+            for (int i = 0; i < 3; i++)
             {
-                int leg_id=kinematics::LEG_GROUP_A[i];
-                foot_cmd_pos_[2*leg_id] = Pee[3*total_count_+period_count][0];
-                foot_cmd_pos_[2*leg_id+1] = Pee[3*total_count_+period_count][1];
+                int legID = kinematics::LEG_GROUP_B[i];
+                foot_cmd_pos_[2*legID]=initTipPos[0] + (swingPee_scaling[period_count][0]-initTipPos[0]) * instant_v / const_v;
+                foot_cmd_pos_[2*legID+1]=swingPee_scaling[period_count][1];
             }
-            for (int i = 0; i < 3; i++)//swing
+
+            //stance
+            body_pos_[0] = begin_body_pos_[0] + cubic_coefs2_[0] * t_r3 + cubic_coefs2_[1] * t_r2 +
+                                   cubic_coefs2_[2] * t_r + cubic_coefs2_[3];
+            for (int i = 0; i < 3; i++)
             {
-                int leg_id=kinematics::LEG_GROUP_B[i];
-                foot_cmd_pos_[2*leg_id] = -Pee[(4*total_count_-1) - (3*total_count_+period_count)][0];
-                foot_cmd_pos_[2*leg_id+1] = Pee[(4*total_count_-1) - (3*total_count_+period_count)][1];
+                int legID = kinematics::LEG_GROUP_A[i];
+                foot_cmd_pos_[2*legID]=begin_foot_pos_[3*legID] + fw_param.step_length/4 - body_pos_[0];
+                foot_cmd_pos_[2*legID+1]=begin_foot_pos_[3*legID+1];
             }
         }
         else if (fw_param.count/total_count_ % 2 == 1) //constant velocity stage
         {
-            for (int i = 0; i < 3; i++)//stance
+            //swing
+            for (int i = 0; i < 3; i++)
             {
-                int leg_id=kinematics::LEG_GROUP_A[i];
-                foot_cmd_pos_[2*leg_id] = Pee[total_count_+period_count][0];
-                foot_cmd_pos_[2*leg_id+1] = Pee[total_count_+period_count][1];
+                int legID = kinematics::LEG_GROUP_B[i];
+                foot_cmd_pos_[2*legID]=swingPee_scaling[period_count][0];
+                foot_cmd_pos_[2*legID+1]=swingPee_scaling[period_count][1];
             }
-            for (int i = 0; i < 3; i++)//swing
+
+            //stance
+            body_pos_[0] = begin_body_pos_[0] + (fw_param.step_length/2)*((period_count+1)*1.0/total_count_);
+            for (int i = 0; i < 3; i++)
             {
-                int leg_id=kinematics::LEG_GROUP_B[i];
-                foot_cmd_pos_[2*leg_id] = -Pee[(4*total_count_-1) - (total_count_+period_count)][0];
-                foot_cmd_pos_[2*leg_id+1] = Pee[(4*total_count_-1) - (total_count_+period_count)][1];
+                int legID = kinematics::LEG_GROUP_A[i];
+                foot_cmd_pos_[2*legID]=begin_foot_pos_[3*legID] + fw_param.step_length/4 - body_pos_[0];
+                foot_cmd_pos_[2*legID+1]=begin_foot_pos_[3*legID+1];
             }
         }
         else
         {
+            //swing
+            instant_v = const_v / fw_param.period * fw_param.count / cs.getControlFreq();
             for (int i = 0; i < 3; i++)
             {
-                int leg_id=kinematics::LEG_GROUP_A[i];
-                foot_cmd_pos_[2*leg_id] = Pee[2*total_count_+period_count][0];
-                foot_cmd_pos_[2*leg_id+1] = Pee[2*total_count_+period_count][1];
+                int legID = kinematics::LEG_GROUP_A[i];
+                foot_cmd_pos_[2*legID]=swingPee_scaling[period_count][0];
+                foot_cmd_pos_[2*legID+1]=swingPee_scaling[period_count][1];
             }
-            for (int i = 0; i < 3; i++)//swing
+
+            //stance
+            body_pos_[0] = begin_body_pos_[0] + (fw_param.step_length/2)*((period_count+1)*1.0/total_count_);
+            for (int i = 0; i < 3; i++)
             {
-                int leg_id=kinematics::LEG_GROUP_B[i];
-                foot_cmd_pos_[2*leg_id] = -Pee[(4*total_count_-1) - (2*total_count_+period_count)][0];
-                foot_cmd_pos_[2*leg_id+1] = Pee[(4*total_count_-1) - (2*total_count_+period_count)][1];
+                int legID = kinematics::LEG_GROUP_B[i];
+                foot_cmd_pos_[2*legID]=begin_foot_pos_[3*legID] + fw_param.step_length/4 - body_pos_[0];
+                foot_cmd_pos_[2*legID+1]=begin_foot_pos_[3*legID+1];
             }
         }
 
+        rt_printf("foot_cmd_pos_:\n");
+        for(int i=0;i<2;i++)
+        {
+            rt_printf("%.2f,%.2f\n",foot_cmd_pos_[2*i],foot_cmd_pos_[2*i+1]);
+        }
+        
         // Leg joint cmd
         for (int i = 0; i < kinematics::ACTIVE_LEG_NUM; i++)
         {
-		//rt_printf("legID=%d, foot_cmd_pos_= %.4f, %.4f\n",i,foot_cmd_pos_[i*2],foot_cmd_pos_[i*2+1]);
-
             // Calculate joint position
             kinematics::Leg::LegIK(
                 &(foot_cmd_pos_[i*2]),
@@ -188,28 +225,73 @@ namespace robot_app
 
     bool FastWalk::fastWalkParser(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)
     {
-        FastWalkParam param;
+        WalkParam param;
 
         if (motion_selector_)
             motion_selector_(params, param);
 
         for (auto i : params)
         {
-            if (i.first == "period")
+            if (i.first == "step_length")
             {
-                param.period = std::stod(i.second);
+                param.step_length = std::stod(i.second);
             }
-            else if(i.first == "step_number")
+            else if (i.first == "step_height")
+            {
+                param.step_height = std::stod(i.second);
+            }
+            else if (i.first == "step_number")
             {
                 param.step_number = std::stoi(i.second);
             }
+            else if (i.first == "turning_rate")
+            {
+                param.turning_rate = std::stod(i.second);
+            }
+            else if (i.first == "period")
+            {
+                param.period = std::stod(i.second);
+            }
         }
 
-        std::fill_n(*Pee,6000*2,0);
-        dlmread("../../../Leg/build/log/entirePee.txt",*Pee);
+        GetScalingPath(param);
 
         msg_out.copyStruct(param);
         return true;
+    }
+
+    void FastWalk::GetScalingPath(WalkParam &param)
+    {
+        double aLmt {1e6/4096*2 * kinematics::PI / 81 * 1.0};
+        double vLmt {100 * kinematics::PI / 81 * 1.0};
+        double out_TipPos[4000][2] {0};
+        double out_period {0};
+        int out_period_count {0};
+
+        time_optimal::TimeOptimalMotionSingleEffector planner;
+        planner.GetTimeOptimalGait(param.step_length,param.step_height,aLmt,vLmt,initTipPos[1],*out_TipPos,out_period);
+        printf("out_period is %.3f\n",out_period);
+
+        out_period_count=(int)(out_period*1000);
+
+        int totalCount = (int)(param.period * 1000);
+        int k {0};
+        double ratio = (double)totalCount/out_period_count;//>=1
+        for(int i=0; i<totalCount-1; i++)
+        {
+            for(int j=k; j<out_period_count; j++)
+            {
+                if(i >= ratio*j && i < ratio*(j+1))
+                {
+                    swingPee_scaling[i][0]=out_TipPos[j][0]+(out_TipPos[j+1][0]-out_TipPos[j][0])*(i-ratio*j)/ratio;
+                    swingPee_scaling[i][1]=out_TipPos[j][1]+(out_TipPos[j+1][1]-out_TipPos[j][1])*(i-ratio*j)/ratio;
+                    k=j;
+                    break;
+                }
+            }
+        }
+        swingPee_scaling[totalCount-1][0]=out_TipPos[out_period_count-1][0];
+        swingPee_scaling[totalCount-1][1]=out_TipPos[out_period_count-1][1];
     }
 
     // supporting functions for walk gait
@@ -239,6 +321,10 @@ namespace robot_app
                   <physical_motor abbreviation="p" type="intArray" default="0"/>
                   <leg abbreviation="l" type="intArray" default="0"/>
                 </motor_select>
+                <step_length  abbreviation="d" type="double" default="0.15"/>
+                <step_height  abbreviation="h" type="double" default="0.05"/>
+                <step_number abbreviation="n" type="int" default="2"/>
+                <turning_rate abbreviation="b" type="double" default="0.0"/>
                 <period abbreviation="t" type="double" default="2"/>
               </fwk_param>
             </fwk>

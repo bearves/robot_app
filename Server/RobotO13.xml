@@ -155,8 +155,11 @@
                   <physical_motor abbreviation="p" type="intArray" default="0"/>
                   <leg abbreviation="l" type="intArray" default="0"/>
                 </motor_select>
-                <period abbreviation="t" type="double" default="2"/>
-                <step_number abbreviation="n" type="int" default="2"/>
+                <step_length  abbreviation="d" type="double" default="0.15"/>
+                <step_height  abbreviation="h" type="double" default="0.05"/>
+                <step_number  abbreviation="n" type="int"    default="1"/>
+                <turning_rate abbreviation="b" type="double" default="0.0"/>
+                <period       abbreviation="t" type="double" default="2"/>
               </fwk_param>
             </fwk>
 	　  <hello default="hello_param">

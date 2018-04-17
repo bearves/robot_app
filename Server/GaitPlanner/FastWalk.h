@@ -5,19 +5,13 @@
 #include <fstream>
 #include "Kinematics/RobotDefinitions.h"
 #include "Kinematics/LegKinematics.h"
+#include "WalkPlanner.h"
+#include <TimeOptimalMotion.h>
 
 void dlmread(const char *FileName, double *pMatrix);
 
 namespace robot_app
 {
-    // for recovery
-    struct FastWalkParam final : aris::server::GaitParamBase
-    {
-    public:
-        double period;
-        int step_number;
-    };
-
     class FastWalk
     {
     public:
@@ -26,12 +20,15 @@ namespace robot_app
         static bool fastWalkParser(const std::string &cmd,
                                const std::map<std::string, std::string> &params,
                                aris::core::Msg &msg_out);
+        static void GetScalingPath(WalkParam &param);
 
     private:
+        static const double initTipPos[2];
+
         static aris::server::MotionSelector motion_selector_;
 
         static int total_count_;
-        static double Pee[6000][2];
+        static double swingPee_scaling[2000][2];
 
         static double begin_foot_pos_[18];
         static double begin_body_pos_[3];
