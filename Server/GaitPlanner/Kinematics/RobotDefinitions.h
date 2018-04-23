@@ -42,6 +42,8 @@ namespace robot_app
         //stairclimb parament
         static const int TOTAL_CLIMB_NUMBER=23;
         static const int TOTAL_HILL_CLIMB_NUMBER=21;
+	static const int TOTAL_CLIMB_UP_NUMBER=11;
+        static const int TOTAL_DOWN_NUMBER=22;
     }
 }
 

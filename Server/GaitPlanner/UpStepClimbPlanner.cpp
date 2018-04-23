@@ -1,95 +1,71 @@
-#include "StairClimbPlanner.h"
+#include "UpStepClimbPlanner.h"
 #include <cmath>
 #include <iostream>
 
 namespace robot_app
 {
-    aris::server::MotionSelector StairClimbPlanner::motion_selector_ = nullptr;
-    int StairClimbPlanner::total_count_;
-    double StairClimbPlanner::begin_foot_pos_[18];
-    double StairClimbPlanner::begin_body_pos_[6];
-    double StairClimbPlanner::foot_pos_[18];
-    double StairClimbPlanner::body_pos_[6];
-    double StairClimbPlanner::begin_joint_position_[kinematics::MOTION_NUM];
-    double StairClimbPlanner::foot_cmd_pos_[kinematics::MOTION_NUM];
-    double StairClimbPlanner::joint_cmd_pos_[kinematics::MOTION_NUM];
-    double StairClimbPlanner::pos2count_ratio_[kinematics::MOTION_NUM];
-    double StairClimbPlanner::cubic_coefs1_[4];
-    double StairClimbPlanner::cubic_coefs2_[4];
-    double StairClimbPlanner::thetaMax;
-    double StairClimbPlanner::foot_hold_key_points_[kinematics::TOTAL_CLIMB_NUMBER+1][kinematics::LEG_NUM*3]
+    aris::server::MotionSelector UpStepClimbPlanner::motion_selector_ = nullptr;
+    int UpStepClimbPlanner::total_count_;
+    double UpStepClimbPlanner::begin_foot_pos_[18];
+    double UpStepClimbPlanner::begin_body_pos_[6];
+    double UpStepClimbPlanner::foot_pos_[18];
+    double UpStepClimbPlanner::body_pos_[6];
+    double UpStepClimbPlanner::begin_joint_position_[kinematics::MOTION_NUM];
+    double UpStepClimbPlanner::foot_cmd_pos_[kinematics::MOTION_NUM];
+    double UpStepClimbPlanner::joint_cmd_pos_[kinematics::MOTION_NUM];
+    double UpStepClimbPlanner::pos2count_ratio_[kinematics::MOTION_NUM];
+    double UpStepClimbPlanner::cubic_coefs1_[4];
+    double UpStepClimbPlanner::cubic_coefs2_[4];
+    double UpStepClimbPlanner::thetaMax;
+    double UpStepClimbPlanner::foot_hold_key_points_[kinematics::TOTAL_CLIMB_UP_NUMBER+1][kinematics::LEG_NUM*3]
                                                    {
-														0.4450 ,0.0200 ,0.0000 ,0.2525 ,0.0200 ,0.2590 ,-0.2525 ,0.0200 ,-0.2590 ,-0.4450 ,0.0200 ,0.0000 ,-0.2525 ,0.0200 ,0.2590 ,0.2525 ,0.0200 ,0.2590 ,
-														0.4450 ,0.0200 ,0.0000 ,0.4400 ,0.0200 ,0.2590 ,-0.2525 ,0.0200 ,-0.2590 ,-0.2600 ,0.0200 ,0.0000 ,-0.2525 ,0.0200 ,0.2590 ,0.4400 ,0.0200 ,0.2590 ,
-														0.7600 ,0.1900 ,0.0000 ,0.4400 ,0.0200 ,0.2590 ,0.0500 ,0.0200 ,-0.2590 ,-0.2600 ,0.0200 ,0.0000 ,0.0500 ,0.0200 ,0.2590 ,0.4400 ,0.0200 ,0.2590 ,
-														0.7600 ,0.1900 ,0.0000 ,0.7600 ,0.1900 ,0.2590 ,0.0500 ,0.0200 ,-0.2590 ,0.0500 ,0.0200 ,0.0000 ,0.0500 ,0.0200 ,0.2590 ,0.7600 ,0.1900 ,0.2590 ,
-														0.9500 ,0.1900 ,0.0000 ,0.7600 ,0.1900 ,0.2590 ,0.2900 ,0.0200 ,-0.2590 ,0.0500 ,0.0200 ,0.0000 ,0.2900 ,0.0200 ,0.2590 ,0.7600 ,0.1900 ,0.2590 ,
-														0.9500 ,0.1900 ,0.0000 ,0.9500 ,0.1900 ,0.2590 ,0.2900 ,0.0200 ,-0.2590 ,0.2900 ,0.0200 ,0.0000 ,0.2900 ,0.0200 ,0.2590 ,0.9500 ,0.1900 ,0.2590 ,
-														1.1300 ,0.3600 ,0.0000 ,0.9500 ,0.1900 ,0.2590 ,0.4300 ,0.0200 ,-0.2590 ,0.2900 ,0.0200 ,0.0000 ,0.4300 ,0.0200 ,0.2590 ,0.9500 ,0.1900 ,0.2590 ,
-														1.1300 ,0.3600 ,0.0000 ,1.1300 ,0.3600 ,0.2590 ,0.4300 ,0.0200 ,-0.2590 ,0.4300 ,0.0200 ,0.0000 ,0.4300 ,0.0200 ,0.2590 ,1.1300 ,0.3600 ,0.2590 ,
-														1.2300 ,0.3600 ,0.0000 ,1.1300 ,0.3600 ,0.2590 ,0.5800 ,0.0200 ,-0.2590 ,0.4300 ,0.0200 ,0.0000 ,0.5800 ,0.0200 ,0.2590 ,1.1300 ,0.3600 ,0.2590 ,
-														1.2300 ,0.3600 ,0.0000 ,1.2300 ,0.3600 ,0.2590 ,0.5800 ,0.0200 ,-0.2590 ,0.5800 ,0.0200 ,0.0000 ,0.5800 ,0.0200 ,0.2590 ,1.2300 ,0.3600 ,0.2590 ,
-														1.3200 ,0.3600 ,0.0000 ,1.2300 ,0.3600 ,0.2590 ,0.7600 ,0.1900 ,-0.2590 ,0.5800 ,0.0200 ,0.0000 ,0.7600 ,0.1900 ,0.2590 ,1.2300 ,0.3600 ,0.2590 ,
-														1.3200 ,0.3600 ,0.0000 ,1.3200 ,0.3600 ,0.2590 ,0.7600 ,0.1900 ,-0.2590 ,0.7600 ,0.1900 ,0.0000 ,0.7600 ,0.1900 ,0.2590 ,1.3200 ,0.3600 ,0.2590 ,
-														1.5000 ,0.5300 ,0.0000 ,1.3200 ,0.3600 ,0.2590 ,0.8200 ,0.1900 ,-0.2590 ,0.7600 ,0.1900 ,0.0000 ,0.8200 ,0.1900 ,0.2590 ,1.3200 ,0.3600 ,0.2590 ,
-														1.5000 ,0.5300 ,0.0000 ,1.5000 ,0.5300 ,0.2590 ,0.8200 ,0.1900 ,-0.2590 ,0.8200 ,0.1900 ,0.0000 ,0.8200 ,0.1900 ,0.2590 ,1.5000 ,0.5300 ,0.2590 ,
-														1.6000 ,0.5300 ,0.0000 ,1.5000 ,0.5300 ,0.2590 ,0.9500 ,0.1900 ,-0.2590 ,0.8200 ,0.1900 ,0.0000 ,0.9500 ,0.1900 ,0.2590 ,1.5000 ,0.5300 ,0.2590 ,
-														1.6000 ,0.5300 ,0.0000 ,1.6000 ,0.5300 ,0.2590 ,0.9500 ,0.1900 ,-0.2590 ,0.9500 ,0.1900 ,0.0000 ,0.9500 ,0.1900 ,0.2590 ,1.6000 ,0.5300 ,0.2590 ,
-														1.7100 ,0.5300 ,0.0000 ,1.6000 ,0.5300 ,0.2590 ,1.1300 ,0.3600 ,-0.2590 ,0.9500 ,0.1900 ,0.0000 ,1.1300 ,0.3600 ,0.2590 ,1.6000 ,0.5300 ,0.2590 ,
-														1.7100 ,0.5300 ,0.0000 ,1.7100 ,0.5300 ,0.2590 ,1.1300 ,0.3600 ,-0.2590 ,1.1300 ,0.3600 ,0.0000 ,1.1300 ,0.3600 ,0.2590 ,1.7100 ,0.5300 ,0.2590 ,
-														1.9600 ,0.5300 ,0.0000 ,1.7100 ,0.5300 ,0.2590 ,1.2900 ,0.3600 ,-0.2590 ,1.1300 ,0.3600 ,0.0000 ,1.2900 ,0.3600 ,0.2590 ,1.7100 ,0.5300 ,0.2590 ,
-														1.9600 ,0.5300 ,0.0000 ,1.9600 ,0.5300 ,0.2590 ,1.2900 ,0.3600 ,-0.2590 ,1.2900 ,0.3600 ,0.0000 ,1.2900 ,0.3600 ,0.2590 ,1.9600 ,0.5300 ,0.2590 ,
-														2.1800 ,0.5300 ,0.0000 ,1.9600 ,0.5300 ,0.2590 ,1.5100 ,0.5300 ,-0.2590 ,1.2900 ,0.3600 ,0.0000 ,1.5100 ,0.5300 ,0.2590 ,1.9600 ,0.5300 ,0.2590 ,
-														2.1800 ,0.5300 ,0.0000 ,2.1800 ,0.5300 ,0.2590 ,1.5100 ,0.5300 ,-0.2590 ,1.5100 ,0.5300 ,0.0000 ,1.5100 ,0.5300 ,0.2590 ,2.1800 ,0.5300 ,0.2590 ,
-														2.5300 ,0.5300 ,0.0000 ,2.1800 ,0.5300 ,0.2590 ,1.8300 ,0.5300 ,-0.2590 ,1.5100 ,0.5300 ,0.0000 ,1.8300 ,0.5300 ,0.2590 ,2.1800 ,0.5300 ,0.2590 ,
-														2.5300 ,0.5300 ,0.0000 ,2.5300 ,0.5300 ,0.2590 ,1.8300 ,0.5300 ,-0.2590 ,1.8300 ,0.5300 ,0.0000 ,1.8300 ,0.5300 ,0.2590 ,2.5300 ,0.5300 ,0.2590 ,
+                                                        0.4450 ,0.0200 ,0.0000 ,0.2525 ,0.0200 ,-0.2590 ,-0.2525 ,0.0200 ,-0.2590 ,-0.4450 ,0.0200 ,0.0000 ,-0.2525 ,0.0200 ,0.2590 ,0.2525 ,0.0200 ,0.2590 ,
+                                                        0.4450 ,0.0200 ,0.0000 ,0.4400 ,0.0200 ,-0.2590 ,-0.2525 ,0.0200 ,-0.2590 ,-0.2600 ,0.0200 ,0.0000 ,-0.2525 ,0.0200 ,0.2590 ,0.4400 ,0.0200 ,0.2590 ,
+                                                        0.7600 ,0.2200 ,0.0000 ,0.4400 ,0.0200 ,-0.2590 ,0.0300 ,0.0200 ,-0.2590 ,-0.2600 ,0.0200 ,0.0000 ,0.0300 ,0.0200 ,0.2590 ,0.4400 ,0.0200 ,0.2590 ,
+                                                        0.7600 ,0.2200 ,0.0000 ,0.7600 ,0.2200 ,-0.2590 ,0.0300 ,0.0200 ,-0.2590 ,0.0300 ,0.0200 ,0.0000 ,0.0300 ,0.0200 ,0.2590 ,0.7600 ,0.2200 ,0.2590 ,
+                                                        1.0400 ,0.0200 ,0.0000 ,0.7600 ,0.2200 ,-0.2590 ,0.2700 ,0.0200 ,-0.2590 ,0.0300 ,0.0200 ,0.0000 ,0.2700 ,0.0200 ,0.2590 ,0.7600 ,0.2200 ,0.2590 ,
+                                                        1.0400 ,0.0200 ,0.0000 ,1.0400 ,0.0200 ,-0.2590 ,0.2700 ,0.0200 ,-0.2590 ,0.2700 ,0.0200 ,0.0000 ,0.2700 ,0.0200 ,0.2590 ,1.0400 ,0.0200 ,0.2590 ,
+                                                        1.3400 ,0.0200 ,0.0000 ,1.0400 ,0.0200 ,-0.2590 ,0.5700 ,0.0200 ,-0.2590 ,0.2700 ,0.0200 ,0.0000 ,0.5700 ,0.0200 ,0.2590 ,1.0400 ,0.0200 ,0.2590 ,
+                                                        1.3400 ,0.0200 ,0.0000 ,1.3400 ,0.0200 ,-0.2590 ,0.5700 ,0.0200 ,-0.2590 ,0.5700 ,0.0200 ,0.0000 ,0.5700 ,0.0200 ,0.2590 ,1.3400 ,0.0200 ,0.2590 ,
+                                                        1.6400 ,0.0200 ,0.0000 ,1.3400 ,0.0200 ,-0.2590 ,0.8100 ,0.2200 ,-0.2590 ,0.5700 ,0.0200 ,0.0000 ,0.8100 ,0.2200 ,0.2590 ,1.3400 ,0.0200 ,0.2590 ,
+                                                        1.6400 ,0.0200 ,0.0000 ,1.6400 ,0.0200 ,-0.2590 ,0.8100 ,0.2200 ,-0.2590 ,0.8100 ,0.2200 ,0.0000 ,0.8100 ,0.2200 ,0.2590 ,1.6400 ,0.0200 ,0.2590 ,
+                                                        2.0200 ,0.0200 ,0.0000 ,1.6400 ,0.0200 ,-0.2590 ,1.3400 ,0.0200 ,-0.2590 ,0.8100 ,0.2200 ,0.0000 ,1.3400 ,0.0200 ,0.2590 ,1.6400 ,0.0200 ,0.2590 ,
+                                                        2.0200 ,0.0200 ,0.0000 ,2.0200 ,0.0200 ,-0.2590 ,1.3400 ,0.0200 ,-0.2590 ,1.3400 ,0.0200 ,0.0000 ,1.3400 ,0.0200 ,0.2590 ,2.0200 ,0.0200 ,0.2590 ,
                                                    };
-    double StairClimbPlanner::body_pos_key_points_[kinematics::TOTAL_CLIMB_NUMBER+1][6]
+    double UpStepClimbPlanner::body_pos_key_points_[kinematics::TOTAL_CLIMB_UP_NUMBER+1][6]
                                                     {
-														0.0000 ,0.4700 ,0.0000 ,0.0000 ,0.0000 ,0.0000 ,
-														0.0702 ,0.4700 ,0.0000 ,0.0500 ,0.0000 ,0.0000 ,
-														0.2944 ,0.5078 ,0.0000 ,0.2350 ,0.0000 ,0.0000 ,
-														0.3014 ,0.5377 ,0.0000 ,0.2350 ,0.0000 ,0.0000 ,
-														0.4470 ,0.5438 ,0.0000 ,0.2521 ,0.0000 ,0.0000 ,
-														0.4395 ,0.5341 ,0.0000 ,0.2521 ,0.0000 ,0.0000 ,
-														0.5913 ,0.5784 ,0.0000 ,0.4522 ,0.0000 ,0.0000 ,
-														0.5913 ,0.5784 ,0.0000 ,0.4522 ,0.0000 ,0.0000 ,
-														0.7063 ,0.5698 ,0.0000 ,0.4819 ,0.0000 ,0.0000 ,
-														0.7063 ,0.5698 ,0.0000 ,0.4819 ,0.0000 ,0.0000 ,
-														0.8216 ,0.6843 ,0.0000 ,0.3209 ,0.0000 ,0.0000 ,
-														0.8226 ,0.6947 ,0.0000 ,0.2947 ,0.0000 ,0.0000 ,
-														0.9674 ,0.7451 ,0.0000 ,0.4636 ,0.0000 ,0.0000 ,
-														0.9674 ,0.7451 ,0.0000 ,0.4636 ,0.0000 ,0.0000 ,
-														1.0763 ,0.7398 ,0.0000 ,0.4819 ,0.0000 ,0.0000 ,
-														1.0763 ,0.7398 ,0.0000 ,0.4819 ,0.0000 ,0.0000 ,
-														1.2953 ,0.8565 ,0.0000 ,0.2851 ,0.0000 ,0.0000 ,
-														1.2964 ,0.8669 ,0.0000 ,0.2851 ,0.0000 ,0.0000 ,
-														1.5135 ,0.8846 ,0.0000 ,0.2485 ,0.0000 ,0.0000 ,
-														1.5159 ,0.8749 ,0.0000 ,0.2485 ,0.0000 ,0.0000 ,
-														1.7332 ,0.9396 ,0.0000 ,0.2485 ,0.0000 ,0.0000 ,
-														1.8450 ,0.9700 ,0.0000 ,0.0000 ,0.0000 ,0.0000 ,
-														2.1585 ,0.9541 ,0.0000 ,0.0000 ,0.0000 ,0.0000 ,
-														2.1800 ,0.9700 ,0.0000 ,0.0000 ,0.0000 ,0.0000 ,
+                                                        0.0000 ,0.4700 ,0.0000 ,0.0000 ,0.0000 ,0.0000 ,
+                                                        0.0503 ,0.4600 ,0.0000 ,0.1000 ,0.0000 ,0.0000 ,
+                                                        0.2708 ,0.5057 ,0.0000 ,0.2674 ,0.0000 ,0.0000 ,
+                                                        0.2810 ,0.5362 ,0.0000 ,0.2674 ,0.0000 ,0.0000 ,
+                                                        0.5357 ,0.4554 ,0.0000 ,0.2674 ,0.0000 ,0.0000 ,
+                                                        0.6550 ,0.4700 ,0.0000 ,0.0000 ,0.0000 ,0.0000 ,
+                                                        0.9355 ,0.4733 ,0.0000 ,0.0000 ,0.0000 ,0.0000 ,
+                                                        0.9550 ,0.4700 ,0.0000 ,0.0000 ,0.0000 ,0.0000 ,
+                                                        1.2683 ,0.4152 ,0.0000 ,-0.2218 ,0.0000 ,0.0000 ,
+                                                        1.3514 ,0.5403 ,0.0000 ,-0.2480 ,0.0000 ,0.0000 ,
+                                                        1.6072 ,0.4008 ,0.0000 ,-0.2480 ,0.0000 ,0.0000 ,
+                                                        1.6800 ,0.4500 ,0.0000 ,0.0000 ,0.0000 ,0.0000 ,
                                                      };
-    double StairClimbPlanner::distance_of_step_[kinematics::TOTAL_CLIMB_NUMBER][kinematics::LEG_NUM];
-    double StairClimbPlanner::height_of_step_[kinematics::TOTAL_CLIMB_NUMBER][kinematics::LEG_NUM];
-    double StairClimbPlanner::h2=0.040;
-    double StairClimbPlanner::distance_of_body_move_[kinematics::TOTAL_CLIMB_NUMBER];
-    double StairClimbPlanner::height_of_body_move_[kinematics::TOTAL_CLIMB_NUMBER];
-    double StairClimbPlanner::body_pitch_[kinematics::TOTAL_CLIMB_NUMBER];
-    int    StairClimbPlanner::current_step_number;
-    double StairClimbPlanner::Delta_d_[kinematics::TOTAL_CLIMB_NUMBER]{0};
-    void StairClimbPlanner::setMotionSelector(const aris::server::MotionSelector &selector)
+    double UpStepClimbPlanner::distance_of_step_[kinematics::TOTAL_CLIMB_UP_NUMBER][kinematics::LEG_NUM];
+    double UpStepClimbPlanner::height_of_step_[kinematics::TOTAL_CLIMB_UP_NUMBER][kinematics::LEG_NUM];
+    double UpStepClimbPlanner::h2=0.040;
+    double UpStepClimbPlanner::distance_of_body_move_[kinematics::TOTAL_CLIMB_UP_NUMBER];
+    double UpStepClimbPlanner::height_of_body_move_[kinematics::TOTAL_CLIMB_UP_NUMBER];
+    double UpStepClimbPlanner::body_pitch_[kinematics::TOTAL_CLIMB_UP_NUMBER];
+    int    UpStepClimbPlanner::current_step_number;
+    double UpStepClimbPlanner::Delta_d_[kinematics::TOTAL_CLIMB_UP_NUMBER]{0};
+    void UpStepClimbPlanner::setMotionSelector(const aris::server::MotionSelector &selector)
     {
         motion_selector_ = selector;
     }
 
-    int StairClimbPlanner::stairclimb(aris::model::Model &model, aris::server::PlanParamBase &param)
+    int UpStepClimbPlanner::upstepclimb(aris::model::Model &model, aris::server::PlanParamBase &param)
     {
         using aris::control::EthercatMotion;
         using kinematics::PI;
 
-        auto& sc_param = static_cast<StairClimbParam &>(param);
+        auto& sc_param = static_cast<UpStepClimbParam &>(param);
         static aris::server::ControlServer &cs = aris::server::ControlServer::instance();
         /////////////////////////////////////////////////////////////
         // calculate step_h and step_d Matrix here                        //
@@ -99,16 +75,16 @@ namespace robot_app
             for (int i=0; i<kinematics::LEG_NUM; i++)
             {
                 //std::cout<<"key point "<<std::endl;
-                for(int j=0;j<kinematics::TOTAL_CLIMB_NUMBER+1;j++)
+                for(int j=0;j<kinematics::TOTAL_CLIMB_UP_NUMBER+1;j++)
                 {
                     //std::cout<<foot_hold_key_points_[j][3*i]<<" "<<foot_hold_key_points_[j][3*i+1]<<" "<<foot_hold_key_points_[j][3*i+2]<<" ";
                 }
             }  
             for (int i=0; i<6; i++)
             {
-                // std::cout<<"total climb number = "<<kinematics::TOTAL_CLIMB_NUMBER<<std::endl;
+                // std::cout<<"total climb number = "<<kinematics::TOTAL_CLIMB_UP_NUMBER<<std::endl;
                 // std::cout<<std::endl<<"key body point"<<std::endl;
-                for(int j=0;j<kinematics::TOTAL_CLIMB_NUMBER+1;j++)
+                for(int j=0;j<kinematics::TOTAL_CLIMB_UP_NUMBER+1;j++)
                 {
                     // std::cout<<body_pos_key_points_[j][i+1]<<" ";
 
@@ -118,14 +94,14 @@ namespace robot_app
 
             for (int i=0; i<kinematics::LEG_NUM; i++)
             {
-                for(int j=0;j<kinematics::TOTAL_CLIMB_NUMBER;j++)
+                for(int j=0;j<kinematics::TOTAL_CLIMB_UP_NUMBER;j++)
                 {
                     distance_of_step_[j][i]=foot_hold_key_points_[j+1][i*3]-foot_hold_key_points_[j][i*3];
                     height_of_step_[j][i]=foot_hold_key_points_[j+1][i*3+1]-foot_hold_key_points_[j][i*3+1];
                 }
             }
 
-            // for (int j=0;j<kinematics::TOTAL_CLIMB_NUMBER;j++)
+            // for (int j=0;j<kinematics::TOTAL_CLIMB_UP_NUMBER;j++)
             // {
             //     std::cout<<std::endl<<"distance_of_step_=";
             //     for(int i=0; i<kinematics::LEG_NUM; i++)
@@ -133,7 +109,7 @@ namespace robot_app
             //         std::cout<<distance_of_step_[j][i]<<std::endl;
             //     }
             // }
-            for (int i=0;i<kinematics::TOTAL_CLIMB_NUMBER;i++)
+            for (int i=0;i<kinematics::TOTAL_CLIMB_UP_NUMBER;i++)
             {
                 distance_of_body_move_[i]=body_pos_key_points_[i+1][0]-body_pos_key_points_[i][0];
                 height_of_body_move_[i]=body_pos_key_points_[i+1][1]-body_pos_key_points_[i][1];
@@ -229,7 +205,7 @@ namespace robot_app
         int period_count = sc_param.count % total_count_;
         double s = -PI / 2.0 * std::cos( PI * (period_count+1) *1.0 / total_count_) + PI / 2.0;
         double s1 = -PI / 2.0 * std::cos( PI * (period_count-0.1*total_count_ + 1) *1.0 / (total_count_-0.2*total_count_)) + PI / 2.0;
-        StairClimbPlanner::current_step_number=sc_param.count/total_count_;
+        UpStepClimbPlanner::current_step_number=sc_param.count/total_count_;
         if (period_count == 0)
         // if (sc_param.count == 0)
         {
@@ -319,23 +295,23 @@ namespace robot_app
 
         // trajectory planning
         //my trajectory planning code begin
-        // StairClimbPlanner::current_step_number=sc_param.count/total_count_;
+        // UpStepClimbPlanner::current_step_number=sc_param.count/total_count_;
 
            //body traj generate
            body_pos_[0]=begin_body_pos_[0]
-                   +(distance_of_body_move_[StairClimbPlanner::current_step_number]-0.5*StairClimbPlanner::Delta_d_[StairClimbPlanner::current_step_number])
+                   +(distance_of_body_move_[UpStepClimbPlanner::current_step_number]-0.5*UpStepClimbPlanner::Delta_d_[UpStepClimbPlanner::current_step_number])
                    *(1-std::cos(s))/2.0;
-           body_pos_[1]=begin_body_pos_[1]+height_of_body_move_[StairClimbPlanner::current_step_number]*(1-std::cos(s))/2.0;
-           body_pos_[3]=begin_body_pos_[3]+body_pitch_[StairClimbPlanner::current_step_number]*(1-std::cos(s))/2.0;
+           body_pos_[1]=begin_body_pos_[1]+height_of_body_move_[UpStepClimbPlanner::current_step_number]*(1-std::cos(s))/2.0;
+           body_pos_[3]=begin_body_pos_[3]+body_pitch_[UpStepClimbPlanner::current_step_number]*(1-std::cos(s))/2.0;
 
            //tip traj generate
            for (int i=0;i<6;i++)
            {
                int leg_id=i;
                foot_pos_[leg_id*3+0] = begin_foot_pos_[leg_id*3+0]
-                       + (StairClimbPlanner::distance_of_step_[StairClimbPlanner::current_step_number][leg_id]-StairClimbPlanner::Delta_d_[StairClimbPlanner::current_step_number])
+                       + (UpStepClimbPlanner::distance_of_step_[UpStepClimbPlanner::current_step_number][leg_id]-UpStepClimbPlanner::Delta_d_[UpStepClimbPlanner::current_step_number])
                        *(1-std::cos(s))/2.0;
-               if(StairClimbPlanner::distance_of_step_[StairClimbPlanner::current_step_number][leg_id]==0)
+               if(UpStepClimbPlanner::distance_of_step_[UpStepClimbPlanner::current_step_number][leg_id]==0)
                {
                    h2=0;
                }
@@ -345,10 +321,10 @@ namespace robot_app
                }
                if(period_count<total_count_/2)
                {
-                   if(StairClimbPlanner::height_of_step_[StairClimbPlanner::current_step_number][leg_id]>=0)
+                   if(UpStepClimbPlanner::height_of_step_[UpStepClimbPlanner::current_step_number][leg_id]>=0)
                    {
                        foot_pos_[leg_id*3+1] = begin_foot_pos_[leg_id*3+1]
-                               + (StairClimbPlanner::height_of_step_[StairClimbPlanner::current_step_number][leg_id]+h2) * std::sin(s);
+                               + (UpStepClimbPlanner::height_of_step_[UpStepClimbPlanner::current_step_number][leg_id]+h2) * std::sin(s);
                    }
                    else
                    {
@@ -359,16 +335,16 @@ namespace robot_app
                }
                else
                {
-                   if(StairClimbPlanner::height_of_step_[StairClimbPlanner::current_step_number][leg_id]>=0)
+                   if(UpStepClimbPlanner::height_of_step_[UpStepClimbPlanner::current_step_number][leg_id]>=0)
                    {
                        foot_pos_[leg_id*3+1] = begin_foot_pos_[leg_id*3+1]
-                               +StairClimbPlanner::height_of_step_[StairClimbPlanner::current_step_number][leg_id]+h2*std::sin(s);
+                               +UpStepClimbPlanner::height_of_step_[UpStepClimbPlanner::current_step_number][leg_id]+h2*std::sin(s);
                    }
                    else
                    {
                        foot_pos_[leg_id*3+1] = begin_foot_pos_[leg_id*3+1]
-                               +StairClimbPlanner::height_of_step_[StairClimbPlanner::current_step_number][leg_id]
-                               +(h2-StairClimbPlanner::height_of_step_[StairClimbPlanner::current_step_number][leg_id])*std::sin(s);
+                               +UpStepClimbPlanner::height_of_step_[UpStepClimbPlanner::current_step_number][leg_id]
+                               +(h2-UpStepClimbPlanner::height_of_step_[UpStepClimbPlanner::current_step_number][leg_id])*std::sin(s);
                    }
 
                }
@@ -480,12 +456,12 @@ namespace robot_app
         }
 
         // return 0 if planning finished, otherwise return positive value
-        return  kinematics::TOTAL_CLIMB_NUMBER * total_count_ - sc_param.count -1;
+        return  kinematics::TOTAL_CLIMB_UP_NUMBER * total_count_ - sc_param.count -1;
     }
 
-    bool StairClimbPlanner::stairclimbParser(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)
+    bool UpStepClimbPlanner::upstepclimbParser(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)
     {
-        StairClimbParam param;
+        UpStepClimbParam param;
 
         if (motion_selector_)
             motion_selector_(params, param);
@@ -510,7 +486,7 @@ namespace robot_app
     }
 
     // supporting functions for walk gait
-    void StairClimbPlanner::calculate_coe(double* t, double* x, double* v, double* coe)
+    void UpStepClimbPlanner::calculate_coe(double* t, double* x, double* v, double* coe)
     {
         double t1 = t[0];
         double t2 = t[1];
@@ -525,7 +501,7 @@ namespace robot_app
         coe[3] = (1/dt/dt/dt) * (t2 * (t1 * (-t1 + t2) * (t2 * v1 + t1 * v2) - t2 * (-3 * t1 + t2) * x1) + t1*t1 * (t1 - 3 * t2) * x2);
     }
 
-    void StairClimbPlanner::waistForwardKinematic(double &theta2, double &theta1,double &d)
+    void UpStepClimbPlanner::waistForwardKinematic(double &theta2, double &theta1,double &d)
     {
         //theta2=groupA angle ;theta1=groupB angle
         double AB=250;

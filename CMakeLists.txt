@@ -98,8 +98,8 @@ endif(WIN32)
 include_directories(${ALL_INCL_DIR})
 link_directories(${ALL_LINK_DIR})
 
-################################### build server ####################################
-set(SOURCE_FILES main.cpp GaitPlanner/RecoverPlanner.cpp GaitPlanner/WalkPlanner.cpp GaitPlanner/MotorSelector.cpp GaitPlanner/FastWalk.cpp GaitPlanner/Kinematics/LegKinematics.cpp GaitPlanner/StairClimbPlanner.cpp GaitPlanner/HillClimbPlanner.cpp GaitPlanner/Kinematics/InverseSolve.cpp GaitPlanner/HelloPlanner.cpp GaitPlanner/Kinematics/InverseSolveLeg.cpp GaitPlanner/HeightAdjustment.cpp)
+################################### build server ####################################GaitPlanner/FastWalk.cpp
+set(SOURCE_FILES main.cpp GaitPlanner/RecoverPlanner.cpp GaitPlanner/WalkPlanner.cpp GaitPlanner/FastWalk.cpp GaitPlanner/MotorSelector.cpp  GaitPlanner/Kinematics/LegKinematics.cpp GaitPlanner/StairClimbPlanner.cpp GaitPlanner/HillClimbPlanner.cpp GaitPlanner/Kinematics/InverseSolve.cpp GaitPlanner/HelloPlanner.cpp GaitPlanner/Kinematics/InverseSolveLeg.cpp GaitPlanner/HeightAdjustment.cpp GaitPlanner/UpStepClimbPlanner.cpp GaitPlanner/DownStairPlanner.cpp)
 PREPEND(FULL_SRC Server ${SOURCE_FILES})
 add_executable(Server ${FULL_SRC})
 target_link_libraries(Server ${ALL_LINK_LIB})

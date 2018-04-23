@@ -17,6 +17,8 @@
 #include "GaitPlanner/FastWalk.h"
 #include "GaitPlanner/HelloPlanner.h" 
 #include "GaitPlanner/HeightAdjustment.h"
+#include "GaitPlanner/UpStepClimbPlanner.h"
+#include "GaitPlanner/DownStairPlanner.h"
 
 
 int main(int argc, char *argv[])
@@ -45,6 +47,8 @@ int main(int argc, char *argv[])
     robot_app::FastWalk::setMotionSelector(robot_app::motorSelector);
     robot_app::HelloPlanner::setMotionSelector(robot_app::motorSelector);
     robot_app::HeightAdjustment::setMotionSelector(robot_app::motorSelector);
+    robot_app::UpStepClimbPlanner::setMotionSelector(robot_app::motorSelector);
+    robot_app::DownStairPlanner::setMotionSelector(robot_app::motorSelector);
     
     auto &rs = aris::server::ControlServer::instance();
     
@@ -58,6 +62,8 @@ int main(int argc, char *argv[])
     rs.addCmd("fwk",robot_app::FastWalk::fastWalkParser, robot_app::FastWalk::fastWalk);
     rs.addCmd("hello", robot_app::HelloPlanner::helloParser, robot_app::HelloPlanner::hello);
     rs.addCmd("height", robot_app::HeightAdjustment::heightParser, robot_app::HeightAdjustment::height);
+    rs.addCmd("usc",robot_app::UpStepClimbPlanner::upstepclimbParser,robot_app::UpStepClimbPlanner::upstepclimb);
+    rs.addCmd("dsc",robot_app::DownStairPlanner::downstairParser,robot_app::DownStairPlanner::downstair);
     rs.open();
     
     rs.setOnExit([&]() 
