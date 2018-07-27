@@ -30,38 +30,13 @@ int main(int argc, char *argv[])
 {
 	std::string xml_address;
 
-	if (argc <= 1)
+	if (std::string(argv[1]) == "EDU5")
 	{
-		std::cout << "you did not type in robot name, in this case ROBOT-III will start" << std::endl;
-		xml_address = "/usr/Robots/resource/Robot_Type_I/Robot_XII/Robot_XII.xml";
-	}
-	else if (std::string(argv[1]) == "XII")
-	{
-		xml_address = "/usr/Robots/resource/Robot_Type_I/Robot_XII/Robot_XII.xml";
-	}
-	else if (std::string(argv[1]) == "FH")
-	{
-		xml_address = "../../Server/RobotFaulhaber.xml";
-	}
-	else if (std::string(argv[1]) == "CP")
-	{
-		xml_address = "../../Server/RobotCopley.xml";
-	}
-	else if (std::string(argv[1]) == "EL")
-	{
-		xml_address = "../../Server/RobotElmo.xml";
-	}
-	else if (std::string(argv[1]) == "EDU")
-	{
-		xml_address = "../../Server/RobotEDU.xml";
-	}
-	else if (std::string(argv[1]) == "EDU2")
-	{
-		xml_address = "../../Server/RobotEDU2.xml";
+		xml_address = "../../Server/RobotEDU5.xml";
 	}
 	else
 	{
-		throw std::runtime_error("invalid robot name, please type in XII");
+		throw std::runtime_error("invalid robot name, please type in EDU5");
 	}
 	
 	auto &rs = aris::server::ControlServer::instance();
