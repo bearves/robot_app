@@ -30,13 +30,13 @@ int main(int argc, char *argv[])
 {
 	std::string xml_address;
 
-	if (std::string(argv[1]) == "EDU5")
+	if (std::string(argv[1]) == "EDU6")
 	{
-		xml_address = "../../Server/RobotEDU5.xml";
+		xml_address = "../../Server/RobotEDU6.xml";
 	}
 	else
 	{
-		throw std::runtime_error("invalid robot name, please type in EDU5");
+		throw std::runtime_error("invalid robot name, please type in EDU6");
 	}
 	
 	auto &rs = aris::server::ControlServer::instance();

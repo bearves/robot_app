@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<RobotEDU5>
+<RobotEDU6>
     <Model>
         <Environment gravity="{0 , -9.8 , 0 , 0 , 0 , 0}"/>
         <Variable>
@@ -525,6 +525,12 @@
                     <require_zero abbreviation="z" type="double" default="0"/>
                 </rc_param>
             </rc>
+            <zf default="all">
+                <all abbreviation="a"/>
+                <first abbreviation="f"/>
+                <second abbreviation="s"/>
+                <leg abbreviation="l" type="intArray" default="0"/>
+            </zf>
             <zrc default="all">
                 <all abbreviation="a"/>
                 <first abbreviation="f"/>
@@ -727,6 +733,64 @@
                         <B_homeOffset index="0x687C" subindex="0" type="int32" config="0"/>
                     </SDO>
                 </CopleyAE2>
+                <Zhiji product_code="0x26483054" vender_id="0x0947" alias="0">
+                    <PDO>
+                        <index_1600 index="0x1600" is_tx="false">
+                            <Zero index="0x7000" subindex="0x01" type="uint8"/>
+                            <Baud index="0x7000" subindex="0x02" type="uint8"/>
+                        </index_1600>
+                        <index_1a00 index="0x1a00" is_tx="true">
+                            <Fx index="0x6000" subindex="0x01" type="int32"/>
+                            <Fy index="0x6000" subindex="0x02" type="int32"/>
+                            <Fz index="0x6000" subindex="0x03" type="int32"/>
+                            <Mx index="0x6000" subindex="0x04" type="int32"/>
+                            <My index="0x6000" subindex="0x05" type="int32"/>
+                            <Mz index="0x6000" subindex="0x06" type="int32"/>
+                        </index_1a00>
+                        <index_1a02 index="0x1a02" is_tx="true">
+                            <Fx index="0x6020" subindex="0x01" type="int32"/>
+                            <Fy index="0x6020" subindex="0x02" type="int32"/>
+                            <Fz index="0x6020" subindex="0x03" type="int32"/>
+                            <Mx index="0x6020" subindex="0x04" type="int32"/>
+                            <My index="0x6020" subindex="0x05" type="int32"/>
+                            <Mz index="0x6020" subindex="0x06" type="int32"/>
+                        </index_1a02>
+                        <index_1a04 index="0x1a04" is_tx="true">
+                            <Fx index="0x6040" subindex="0x01" type="int32"/>
+                            <Fy index="0x6040" subindex="0x02" type="int32"/>
+                            <Fz index="0x6040" subindex="0x03" type="int32"/>
+                            <Mx index="0x6040" subindex="0x04" type="int32"/>
+                            <My index="0x6040" subindex="0x05" type="int32"/>
+                            <Mz index="0x6040" subindex="0x06" type="int32"/>
+                        </index_1a04>
+                        <index_1a06 index="0x1a06" is_tx="true">
+                            <Fx index="0x6060" subindex="0x01" type="int32"/>
+                            <Fy index="0x6060" subindex="0x02" type="int32"/>
+                            <Fz index="0x6060" subindex="0x03" type="int32"/>
+                            <Mx index="0x6060" subindex="0x04" type="int32"/>
+                            <My index="0x6060" subindex="0x05" type="int32"/>
+                            <Mz index="0x6060" subindex="0x06" type="int32"/>
+                        </index_1a06>
+                        <index_1a08 index="0x1a08" is_tx="true">
+                            <Fx index="0x6080" subindex="0x01" type="int32"/>
+                            <Fy index="0x6080" subindex="0x02" type="int32"/>
+                            <Fz index="0x6080" subindex="0x03" type="int32"/>
+                            <Mx index="0x6080" subindex="0x04" type="int32"/>
+                            <My index="0x6080" subindex="0x05" type="int32"/>
+                            <Mz index="0x6080" subindex="0x06" type="int32"/>
+                        </index_1a08>
+                        <index_1a0A index="0x1a0A" is_tx="true">
+                            <Fx index="0x60A0" subindex="0x01" type="int32"/>
+                            <Fy index="0x60A0" subindex="0x02" type="int32"/>
+                            <Fz index="0x60A0" subindex="0x03" type="int32"/>
+                            <Mx index="0x60A0" subindex="0x04" type="int32"/>
+                            <My index="0x60A0" subindex="0x05" type="int32"/>
+                            <Mz index="0x60A0" subindex="0x06" type="int32"/>
+                        </index_1a0A>
+                    </PDO>
+                    <SDO>
+                    </SDO>
+                </Zhiji>
                 <RuiCongCombo product_code="0x00000036" vender_id="0xe000001b" alias="0">
                     <PDO>
                         <index_1a01 index="0x1a01" is_tx="true">
@@ -853,6 +917,7 @@
                 </MeHeavyEIMU>
             </SlaveType>
             <Slave>
+                <ForceSensor type="Zhiji"/>
                 <Driver1   type="ElmoSoloWhistle"/>
                 <Driver2   type="ElmoSoloWhistle"/>
                 <Driver3   type="ElmoSoloWhistle"/>
@@ -871,8 +936,6 @@
                 <Driver16  type="ElmoSoloWhistle"/>
                 <Driver17  type="ElmoSoloWhistle"/>
                 <Driver18  type="ElmoSoloWhistle"/>
-                <ForceSensor type="RuiCongCombo"/>
-                <IMU1      type="MeHeavyEIMU"/>
             </Slave>
             <LogicMotionAxis>
                 <Motion1  type="ElmoSoloWhistle"  min_pos="0.538" max_pos="0.746" max_vel="0.9481" home_pos="-0.538" input2count="204800" driver_id="0" abs_id="1"/>
@@ -900,4 +963,4 @@
         <IMU active="false" type="xsens_imu" portLinux="/dev/ttyUSB0" baudRate="921600" sampleRate="400" PeImuGround2BodyGound="{0,0,0,0,-PI/2,PI}" PeImu2Body="{0,0,0,0,PI/2,0}"/>
         <Vision type="kinect2.0"/>
     </Sensors>
-</RobotEDU5>
+</RobotEDU6>
