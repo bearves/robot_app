@@ -917,7 +917,6 @@
                 </MeHeavyEIMU>
             </SlaveType>
             <Slave>
-                <ForceSensor type="Zhiji"/>
                 <Driver1   type="ElmoSoloWhistle"/>
                 <Driver2   type="ElmoSoloWhistle"/>
                 <Driver3   type="ElmoSoloWhistle"/>
@@ -936,6 +935,7 @@
                 <Driver16  type="ElmoSoloWhistle"/>
                 <Driver17  type="ElmoSoloWhistle"/>
                 <Driver18  type="ElmoSoloWhistle"/>
+                <ForceSensor type="Zhiji"/>
             </Slave>
             <LogicMotionAxis>
                 <Motion1  type="ElmoSoloWhistle"  min_pos="0.538" max_pos="0.746" max_vel="0.9481" home_pos="-0.538" input2count="204800" driver_id="0" abs_id="1"/>
