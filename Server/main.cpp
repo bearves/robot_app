@@ -16,6 +16,9 @@ using namespace std;
 #include "move_body.h"
 #include "twist_waist.h"
 #include "say_hello.h"
+#include "move_body_with_force.h"
+#include "find_joint_center.h"
+#include "calibration.h"
 
 #ifdef WIN32
 #define rt_printf printf
@@ -51,9 +54,13 @@ int main(int argc, char *argv[])
 	rs.addCmd("wk", Robots::walkParse, Robots::walkGait);
 	rs.addCmd("ro", Robots::resetOriginParse, Robots::resetOriginGait);
 	rs.addCmd("mb", moveBodyParse, moveBodyGait);
+	rs.addCmd("mbf", moveBodyWithForceParse, moveBodyWithForceGait);
+	rs.addCmd("mbfs", moveBodyWithForceStopParse, moveBodyWithForceGait);
 	rs.addCmd("sw", swingParse, swingGait);
 	rs.addCmd("tw", twistWaistParse, twistWaistGait);
 	rs.addCmd("sh", sayHelloParse, sayHelloGait);
+	rs.addCmd("fjc", findJointCenterParse, findJointCenterGait);
+	rs.addCmd("cl", calibrationParse, calibrationGait);
 
 	rs.open();
 
