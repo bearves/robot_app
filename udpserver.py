@@ -6,6 +6,8 @@ import os
 import time
 import sys
 
+DEBUG = False
+
 accessCode = 'GET'
 localPort = 5868
 bufferLength = 2048
@@ -41,6 +43,8 @@ def main():
                 msgToSend = 'BEG ' + dataToSend + ' END'
                 sock.sendto(msgToSend, remoteAddr)
                 print('DataLength:', len(msgToSend))
+                if DEBUG:
+                    print(msgToSend)
 
 if __name__ == '__main__':
     main()
