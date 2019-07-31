@@ -34,6 +34,10 @@ int main(int argc, char *argv[])
 	{
 		xml_address = "../../Server/RobotEDU6.xml";
 	}
+	else if (std::string(argv[1]) == "EDU6a")
+	{
+		xml_address = "../../Server/RobotEDU6a.xml";
+	}
 	else
 	{
 		throw std::runtime_error("invalid robot name, please type in EDU6");
